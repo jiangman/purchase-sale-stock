@@ -5,6 +5,7 @@ import com.ehu.constants.SystemConstants;
 import com.ehu.exceptions.LoginValidationException;
 import com.ehu.model.SysUser;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -43,7 +44,8 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
         if (sysUser == null) {
             throw new LoginValidationException(ErrorMessageConstants.ILLEGAL_TOKEN);
         }
-        SystemConstants.USER_TOKEN = sysUser;
+        BeanUtils.copyProperties(sysUser, SystemConstants.USER_TOKEN);
+        SystemConstants.USER_TOKEN.setToken(token);
         return true;
     }
 }

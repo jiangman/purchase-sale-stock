@@ -1,6 +1,6 @@
 package com.ehu.constants;
 
-import com.ehu.model.SysUser;
+import com.ehu.bean.UserToken;
 
 /**
  * 系统全局参数常量类.
@@ -9,8 +9,7 @@ import com.ehu.model.SysUser;
  * @since 2017-03-08 14:59.
  */
 public class SystemConstants {
-    public static SysUser USER_TOKEN = null;
-
     /** swagger url */
     public static final String[] DO_NOT_INTERCEPT_URLS = {"/configuration/ui", "/swagger-resources", "/v2/api-docs", "/configuration/security"};
+    public static UserToken USER_TOKEN = null;
 }

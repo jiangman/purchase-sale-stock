@@ -4,6 +4,7 @@ import com.ehu.bean.UserToken;
 import com.ehu.bean.request.LoginRequest;
 import com.ehu.constants.BusinessConstants;
 import com.ehu.constants.ErrorMessageConstants;
+import com.ehu.constants.SystemConstants;
 import com.ehu.exceptions.LoginValidationException;
 import com.ehu.mapper.SysUserMapper;
 import com.ehu.model.SysUser;
@@ -11,7 +12,6 @@ import com.ehu.util.MathUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 /**
@@ -52,5 +52,12 @@ public class SysUserService {
         BeanUtils.copyProperties(sysUser, userToken);
         userToken.setToken(token);
         return userToken;
+    }
+
+    /**
+     * 注销登录
+     */
+    public void logout() {
+        redisTemplate.delete(SystemConstants.USER_TOKEN.getToken());
     }
 }
