@@ -1,0 +1,21 @@
+package com.ehu.config;
+
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
+/**
+ * druid属性配置
+ */
+@ConfigurationProperties(prefix = "druid")
+@Data
+public class DruidProperties {
+    private String url;
+    private String username;
+    private String password;
+    private String driverClass;
+
+    private int maxActive;
+    private int minIdle;
+    private int initialSize;
+    private boolean testOnBorrow;
+}

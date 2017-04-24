@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ehu.mapper.TMerchantPurchaseOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.ehu.model.TMerchantPurchaseOrder" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="purchase_order_id" property="purchaseOrderId" jdbcType="INTEGER" />
+    <result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
+    <result column="person_in charge" property="personInCharge" jdbcType="VARCHAR" />
+    <result column="order_total_price" property="orderTotalPrice" jdbcType="DECIMAL" />
+    <result column="order_actual_price" property="orderActualPrice" jdbcType="DECIMAL" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="order_status" property="orderStatus" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+  </resultMap>
+</mapper>

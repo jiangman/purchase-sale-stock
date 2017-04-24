@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ehu.mapper.TStockMapper" >
+  <resultMap id="BaseResultMap" type="com.ehu.model.TStock" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="stock_id" property="stockId" jdbcType="INTEGER" />
+    <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+    <result column="first_in_time" property="firstInTime" jdbcType="TIMESTAMP" />
+    <result column="last_out_time" property="lastOutTime" jdbcType="TIMESTAMP" />
+    <result column="stock_quantity" property="stockQuantity" jdbcType="INTEGER" />
+    <result column="send_quantity" property="sendQuantity" jdbcType="INTEGER" />
+    <result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
+    <result column="stock_num" property="stockNum" jdbcType="VARCHAR" />
+  </resultMap>
+</mapper>

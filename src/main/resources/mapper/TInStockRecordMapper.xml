@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ehu.mapper.TInStockRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.ehu.model.TInStockRecord" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="in_record_id" property="inRecordId" jdbcType="INTEGER" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+    <result column="out_quantity" property="outQuantity" jdbcType="INTEGER" />
+    <result column="in_time" property="inTime" jdbcType="TIMESTAMP" />
+    <result column="goods_type" property="goodsType" jdbcType="INTEGER" />
+    <result column="batch" property="batch" jdbcType="VARCHAR" />
+    <result column="production_time" property="productionTime" jdbcType="TIMESTAMP" />
+    <result column="stock_num" property="stockNum" jdbcType="VARCHAR" />
+    <result column="stock_id" property="stockId" jdbcType="INTEGER" />
+    <result column="purchase_order_id" property="purchaseOrderId" jdbcType="INTEGER" />
+    <result column="standard" property="standard" jdbcType="VARCHAR" />
+    <result column="receiver" property="receiver" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+</mapper>
