@@ -55,7 +55,7 @@ public class ApiExceptionHandler implements ResponseBodyAdvice<Object> {
      * @return
      */
     @ExceptionHandler(BusinessErrorException.class)
-    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
     public Response handleBusinessErrorException(BusinessErrorException ex) {
         ex.printStackTrace();

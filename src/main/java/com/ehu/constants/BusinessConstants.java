@@ -14,4 +14,14 @@ public interface BusinessConstants {
      * 进销存用户redis存储的key的前部分
      */
     String STOCK_USER_KEY_HEAD = "STOCK_USER_";
+
+    /**
+     * 未删除
+     */
+    int DEL_FLAG_UNDEL = 0;
+
+    /**
+     * 已删除
+     */
+    int DEL_FLAG_DEL = 1;
 }

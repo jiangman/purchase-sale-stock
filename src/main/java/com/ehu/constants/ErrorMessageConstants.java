@@ -22,4 +22,6 @@ public interface ErrorMessageConstants {
     String UNCORRECT_PWD = "密码错误";
 
     String ILLEGAL_TOKEN = "token不存在或者失效";
+
+    String NO_SUCH_DATA = "数据不存在";
 }

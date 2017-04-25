@@ -1,18 +1,19 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ehu.mapper.TSupplierMapper" >
-  <resultMap id="BaseResultMap" type="com.ehu.model.TSupplier" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ehu.mapper.TSupplierMapper">
+    <resultMap id="BaseResultMap" type="com.ehu.model.TSupplier">
     <!--
       WARNING - @mbg.generated
     -->
-    <id column="supplier_id" property="supplierId" jdbcType="INTEGER" />
-    <result column="supplier_name" property="supplierName" jdbcType="VARCHAR" />
-    <result column="address" property="address" jdbcType="VARCHAR" />
-    <result column="tel" property="tel" jdbcType="VARCHAR" />
-    <result column="postcode" property="postcode" jdbcType="VARCHAR" />
-    <result column="contacter" property="contacter" jdbcType="VARCHAR" />
-    <result column="email" property="email" jdbcType="VARCHAR" />
-    <result column="payment_days" property="paymentDays" jdbcType="VARCHAR" />
-    <result column="payment_type" property="paymentType" jdbcType="VARCHAR" />
+        <id column="supplier_id" jdbcType="INTEGER" property="supplierId"/>
+        <result column="supplier_name" jdbcType="VARCHAR" property="supplierName"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="tel" jdbcType="VARCHAR" property="tel"/>
+        <result column="postcode" jdbcType="VARCHAR" property="postcode"/>
+        <result column="contacter" jdbcType="VARCHAR" property="contacter"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="payment_days" jdbcType="VARCHAR" property="paymentDays"/>
+        <result column="payment_type" jdbcType="VARCHAR" property="paymentType"/>
+        <result column="del_flag" jdbcType="INTEGER" property="delFlag"/>
   </resultMap>
 </mapper>

@@ -2,6 +2,9 @@ package com.ehu.service;
 
 import com.ehu.bean.request.SupplierQueryRequest;
 import com.ehu.bean.request.SupplierRequest;
+import com.ehu.constants.BusinessConstants;
+import com.ehu.constants.ErrorMessageConstants;
+import com.ehu.exceptions.BusinessErrorException;
 import com.ehu.mapper.TSupplierMapper;
 import com.ehu.model.TSupplier;
 import com.ehu.model.TSupplierExample;
@@ -29,7 +32,7 @@ public class SupplierService {
      */
     public Object querySuppliers(SupplierQueryRequest request) {
         TSupplierExample example = new TSupplierExample();
-        example.createCriteria().andSupplierNameLike("%" + request.getSupplierName() + "%");
+        example.createCriteria().andSupplierNameLike("%" + request.getSupplierName() + "%").andDelFlagEqualTo(BusinessConstants.DEL_FLAG_UNDEL);
         return supplierMapper.selectByExampleAndRowBounds(example, new RowBounds(request.getOffset(), request.getPageSize()));
     }
 
@@ -43,5 +46,21 @@ public class SupplierService {
         TSupplier supplier = new TSupplier();
         BeanUtils.copyProperties(request, supplier);
         return supplierMapper.insertSelective(supplier);
+    }
+
+    /**
+     * 修改供应商
+     *
+     * @param request
+     * @return
+     * @throws BusinessErrorException
+     */
+    public Object updateSupplier(SupplierRequest request) {
+        TSupplier supplier = supplierMapper.selectByPrimaryKey(request.getSupplierId());
+        if (supplier == null) {
+            return ErrorMessageConstants.NO_SUCH_DATA;
+        }
+        BeanUtils.copyProperties(request, supplier);
+        return supplierMapper.updateByPrimaryKey(supplier);
     }
 }

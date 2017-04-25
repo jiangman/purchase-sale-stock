@@ -1,6 +1,8 @@
 package com.ehu.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Table(name = "t_supplier")
 public class TSupplier {
@@ -53,6 +55,12 @@ public class TSupplier {
      */
     @Column(name = "payment_type")
     private String paymentType;
+
+    /**
+     * 删除标识(0:正常， 1:已删除)
+     */
+    @Column(name = "del_flag")
+    private Integer delFlag;
 
     /**
      * 获取供应商id
@@ -214,5 +222,23 @@ public class TSupplier {
      */
     public void setPaymentType(String paymentType) {
         this.paymentType = paymentType;
+    }
+
+    /**
+     * 获取删除标识(0:正常， 1:已删除)
+     *
+     * @return del_flag - 删除标识(0:正常， 1:已删除)
+     */
+    public Integer getDelFlag() {
+        return delFlag;
+    }
+
+    /**
+     * 设置删除标识(0:正常， 1:已删除)
+     *
+     * @param delFlag 删除标识(0:正常， 1:已删除)
+     */
+    public void setDelFlag(Integer delFlag) {
+        this.delFlag = delFlag;
     }
 }
