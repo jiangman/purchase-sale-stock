@@ -7,8 +7,13 @@ import com.ehu.constants.ErrorMessageConstants;
 import com.ehu.constants.SystemConstants;
 import com.ehu.exceptions.LoginValidationException;
 import com.ehu.mapper.SysUserMapper;
+import com.ehu.mapper.TMerchantUserInfoMapper;
+import com.ehu.mapper.TMerchantUserMapper;
 import com.ehu.model.SysUser;
+import com.ehu.model.TMerchantUser;
+import com.ehu.model.TMerchantUserInfo;
 import com.ehu.util.MathUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -26,6 +31,12 @@ public class SysUserService {
     private SysUserMapper userMapper;
 
     @Autowired
+    private TMerchantUserMapper merchantUserMapper;
+
+    @Autowired
+    private TMerchantUserInfoMapper merchantUserInfoMapper;
+
+    @Autowired
     private RedisTemplate redisTemplate;
 
     /**
@@ -36,11 +47,37 @@ public class SysUserService {
      * @throws LoginValidationException
      */
     public Object login(LoginRequest request) throws LoginValidationException {
+        UserToken userToken = new UserToken();
         SysUser query = new SysUser();
         query.setUserAccount(request.getUserAccount());
         SysUser sysUser = userMapper.selectOne(query);
         if (sysUser == null) {
-            throw new LoginValidationException(ErrorMessageConstants.NO_SUCH_USER);
+            if (StringUtils.isNumeric(request.getUserAccount())) {
+                TMerchantUser merchantUserQuery = new TMerchantUser();
+                merchantUserQuery.setPhone(Long.valueOf(request.getUserAccount()));
+                TMerchantUser merchantUser = merchantUserMapper.selectOne(merchantUserQuery);
+                if (merchantUser == null) {
+                    throw new LoginValidationException(ErrorMessageConstants.NO_SUCH_USER);
+                } else {
+                    if (!request.getUserPassword().equals(merchantUser.getPassWord())) {
+                        throw new LoginValidationException(ErrorMessageConstants.UNCORRECT_PWD);
+                    }
+                    String token = MathUtil.getToken();
+                    redisTemplate.opsForValue().set(BusinessConstants.STOCK_USER_KEY_HEAD + merchantUser.getPhone(), token);
+                    userToken.setUserName(merchantUser.getRealName());
+                    userToken.setMerchant(true);
+                    userToken.setToken(token);
+                    userToken.setUserAccount(request.getUserAccount());
+                    TMerchantUserInfo merchantUserInfo = new TMerchantUserInfo();
+                    merchantUserInfo.setMuid(merchantUser.getGuid());
+                    userToken.setMerchantId(merchantUserInfoMapper.selectOne(merchantUserInfo).getSmiid());
+                    // 用户信息暂存redis
+                    redisTemplate.opsForValue().set(token, userToken);
+                    return userToken;
+                }
+            } else {
+                throw new LoginValidationException(ErrorMessageConstants.NO_SUCH_USER);
+            }
         }
         if (BusinessConstants.USER_PROHIBIT.equals(sysUser.getUserStatus())) {
             throw new LoginValidationException(ErrorMessageConstants.USER_PROHIBIT);
@@ -50,11 +87,10 @@ public class SysUserService {
         }
         String token = MathUtil.getToken();
         redisTemplate.opsForValue().set(BusinessConstants.STOCK_USER_KEY_HEAD + sysUser.getUserAccount(), token);
-        // 用户信息暂存redis
-        redisTemplate.opsForValue().set(token, sysUser);
-        UserToken userToken = new UserToken();
         BeanUtils.copyProperties(sysUser, userToken);
         userToken.setToken(token);
+        // 用户信息暂存redis
+        redisTemplate.opsForValue().set(token, userToken);
         return userToken;
     }
 

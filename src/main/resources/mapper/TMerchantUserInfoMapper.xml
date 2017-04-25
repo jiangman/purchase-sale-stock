@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ehu.mapper.TMerchantUserInfoMapper">
+    <resultMap id="BaseResultMap" type="com.ehu.model.TMerchantUserInfo">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="muid" property="muid" jdbcType="INTEGER"/>
+        <result column="smiid" property="smiid" jdbcType="INTEGER"/>
+        <result column="roleid" property="roleid" jdbcType="BIGINT"/>
+        <result column="parentid" property="parentid" jdbcType="INTEGER"/>
+    </resultMap>
+</mapper>

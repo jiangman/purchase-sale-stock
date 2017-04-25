@@ -1,12 +1,12 @@
 package com.ehu.interceptor;
 
+import com.ehu.bean.UserToken;
 import com.ehu.constants.BusinessConstants;
 import com.ehu.constants.ErrorMessageConstants;
 import com.ehu.constants.SystemConstants;
 import com.ehu.exceptions.LoginValidationException;
 import com.ehu.model.SysUser;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -41,15 +41,14 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
         if (token == null) {
             throw new LoginValidationException(ErrorMessageConstants.ILLEGAL_TOKEN);
         }
-        Object sysUser = redisTemplate.opsForValue().get(token);
-        if (sysUser == null) {
+        Object userToken = redisTemplate.opsForValue().get(token);
+        if (userToken == null) {
             throw new LoginValidationException(ErrorMessageConstants.ILLEGAL_TOKEN);
         }
-        String redisToken = (String) redisTemplate.opsForValue().get(BusinessConstants.STOCK_USER_KEY_HEAD + ((SysUser) sysUser).getUserAccount());
+        String redisToken = (String) redisTemplate.opsForValue().get(BusinessConstants.STOCK_USER_KEY_HEAD + ((UserToken) userToken).getUserAccount());
         if (!token.equals(redisToken)) {
             throw new LoginValidationException(ErrorMessageConstants.ILLEGAL_TOKEN);
         }
-        BeanUtils.copyProperties(sysUser, SystemConstants.USER_TOKEN);
         SystemConstants.USER_TOKEN.setToken(token);
         return true;
     }

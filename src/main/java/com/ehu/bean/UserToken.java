@@ -25,4 +25,8 @@ public class UserToken {
     private Integer companyId;
 
     private String token;
+
+    private boolean isMerchant;
+
+    private int merchantId;
 }
