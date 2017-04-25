@@ -16,8 +16,4 @@
     <result column="department_id" property="departmentId" jdbcType="INTEGER" />
     <result column="company_id" property="companyId" jdbcType="INTEGER" />
   </resultMap>
-
-  <select id="queryUserByAccount" resultMap="BaseResultMap">
-      select * from ehu.sys_user where user_account = #{userAccount}
-  </select>
 </mapper>

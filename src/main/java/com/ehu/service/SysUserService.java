@@ -26,7 +26,7 @@ public class SysUserService {
     private SysUserMapper userMapper;
 
     @Autowired
-    private RedisTemplate<String, SysUser> redisTemplate;
+    private RedisTemplate redisTemplate;
 
     /**
      *
@@ -36,7 +36,9 @@ public class SysUserService {
      * @throws LoginValidationException
      */
     public Object login(LoginRequest request) throws LoginValidationException {
-        SysUser sysUser = userMapper.queryUserByAccount(request.getUserAccount());
+        SysUser query = new SysUser();
+        query.setUserAccount(request.getUserAccount());
+        SysUser sysUser = userMapper.selectOne(query);
         if (sysUser == null) {
             throw new LoginValidationException(ErrorMessageConstants.NO_SUCH_USER);
         }
@@ -47,6 +49,8 @@ public class SysUserService {
             throw new LoginValidationException(ErrorMessageConstants.UNCORRECT_PWD);
         }
         String token = MathUtil.getToken();
+        redisTemplate.opsForValue().set(BusinessConstants.STOCK_USER_KEY_HEAD + sysUser.getUserAccount(), token);
+        // 用户信息暂存redis
         redisTemplate.opsForValue().set(token, sysUser);
         UserToken userToken = new UserToken();
         BeanUtils.copyProperties(sysUser, userToken);

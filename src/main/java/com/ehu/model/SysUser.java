@@ -1,11 +1,9 @@
 package com.ehu.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import java.util.Date;
 import javax.persistence.*;
+import java.util.Date;
 
-@Table(name = "sys_user")
+@Table(name = "ehu.sys_user")
 public class SysUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +15,6 @@ public class SysUser {
     @Column(name = "user_account")
     private String userAccount;
 
-    @JsonIgnore
     @Column(name = "user_password")
     private String userPassword;
 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ehu.mapper.TStoreGoodsMenuFirstMapper">
+    <resultMap id="BaseResultMap" type="com.ehu.model.TStoreGoodsMenuFirst">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="sgmfid" jdbcType="INTEGER" property="sgmfid"/>
+        <result column="sgmf_name" jdbcType="VARCHAR" property="sgmfName"/>
+        <result column="sgmf_sort" jdbcType="INTEGER" property="sgmfSort"/>
+        <result column="sgmf_type" jdbcType="INTEGER" property="sgmfType"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <result column="valid_flag" jdbcType="INTEGER" property="validFlag"/>
+        <result column="sgmf_icon" jdbcType="VARCHAR" property="sgmfIcon"/>
+        <result column="is_redpaper_usable" jdbcType="INTEGER" property="isRedpaperUsable"/>
+    </resultMap>
+</mapper>

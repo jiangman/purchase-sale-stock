@@ -1,5 +1,6 @@
 package com.ehu.interceptor;
 
+import com.ehu.constants.BusinessConstants;
 import com.ehu.constants.ErrorMessageConstants;
 import com.ehu.constants.SystemConstants;
 import com.ehu.exceptions.LoginValidationException;
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Slf4j
 public class TokenInterceptor extends HandlerInterceptorAdapter {
-    private RedisTemplate<String, SysUser> redisTemplate;
+    private RedisTemplate redisTemplate;
 
     public TokenInterceptor(RedisTemplate<String, SysUser> redisTemplate) {
         this.redisTemplate = redisTemplate;
@@ -40,8 +41,12 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
         if (token == null) {
             throw new LoginValidationException(ErrorMessageConstants.ILLEGAL_TOKEN);
         }
-        SysUser sysUser = redisTemplate.opsForValue().get(token);
+        Object sysUser = redisTemplate.opsForValue().get(token);
         if (sysUser == null) {
+            throw new LoginValidationException(ErrorMessageConstants.ILLEGAL_TOKEN);
+        }
+        String redisToken = (String) redisTemplate.opsForValue().get(BusinessConstants.STOCK_USER_KEY_HEAD + ((SysUser) sysUser).getUserAccount());
+        if (!token.equals(redisToken)) {
             throw new LoginValidationException(ErrorMessageConstants.ILLEGAL_TOKEN);
         }
         BeanUtils.copyProperties(sysUser, SystemConstants.USER_TOKEN);

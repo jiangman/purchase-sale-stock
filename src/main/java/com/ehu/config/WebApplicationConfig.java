@@ -1,12 +1,11 @@
 package com.ehu.config;
 
+import com.ehu.interceptor.PermissionInterceptor;
 import com.ehu.interceptor.RequestInterceptor;
 import com.ehu.interceptor.TokenInterceptor;
-import com.ehu.model.SysUser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -15,7 +14,6 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 
 /**
@@ -27,12 +25,13 @@ import java.text.SimpleDateFormat;
 @Configuration
 public class WebApplicationConfig extends WebMvcConfigurerAdapter {
     @Autowired
-    private RedisTemplate<String, SysUser> redisTemplate;
+    private RedisTemplate redisTemplate;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new RequestInterceptor()).addPathPatterns("/*");
         registry.addInterceptor(new TokenInterceptor(redisTemplate)).excludePathPatterns("/v2/*", "/user/login", "/swagger-ui.html", "/configuration/ui", "/swagger-resources", "/configuration/security");
+        registry.addInterceptor(new PermissionInterceptor()).excludePathPatterns("/v2/*", "/user/login", "/swagger-ui.html", "/configuration/ui", "/swagger-resources", "/configuration/security");
     }
 
     @Bean

@@ -4,5 +4,4 @@ import com.ehu.model.SysUser;
 import com.ehu.util.MyMapper;
 
 public interface SysUserMapper extends MyMapper<SysUser> {
-    SysUser queryUserByAccount(String userAccount);
 }

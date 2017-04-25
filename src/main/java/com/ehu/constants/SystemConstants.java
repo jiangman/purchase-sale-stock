@@ -11,5 +11,6 @@ import com.ehu.bean.UserToken;
 public class SystemConstants {
     /** swagger url */
     public static final String[] DO_NOT_INTERCEPT_URLS = {"/configuration/ui", "/swagger-resources", "/v2/api-docs", "/configuration/security"};
-    public static UserToken USER_TOKEN = null;
+
+    public static UserToken USER_TOKEN = new UserToken();
 }

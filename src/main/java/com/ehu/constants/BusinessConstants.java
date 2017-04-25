@@ -10,6 +10,8 @@ public interface BusinessConstants {
     /** 用户被禁用 */
     String USER_PROHIBIT = "0";
 
-//    /** 进销存用户redis存储的key的前部分 */
-//    String STOCK_USER_KEY_HEAD = "STOCK_USER_";
+    /**
+     * 进销存用户redis存储的key的前部分
+     */
+    String STOCK_USER_KEY_HEAD = "STOCK_USER_";
 }

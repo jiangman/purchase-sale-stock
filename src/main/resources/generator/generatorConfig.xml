@@ -6,7 +6,7 @@
 <generatorConfiguration>
     <properties resource="application.properties"/>
 
-    <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+    <context id="Mysql" targetRuntime="MyBatis3" defaultModelType="flat">
         <property name="beginningDelimiter" value="`"/>
         <property name="endingDelimiter" value="`"/>
 
@@ -27,7 +27,7 @@
         <javaClientGenerator targetPackage="com.ehu.mapper" targetProject="src/main/java"
                              type="XMLMAPPER"/>
 
-        <table tableName="%">
+        <table tableName="t_supplier">
             <!--mysql 配置-->
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
             <!--oracle 配置-->
