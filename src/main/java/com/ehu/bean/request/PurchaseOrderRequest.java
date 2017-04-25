@@ -17,6 +17,9 @@ import java.util.List;
 @Data
 @ApiModel
 public class PurchaseOrderRequest {
+    @ApiModelProperty("采购订单id，新增时不需要传")
+    private int purchaseOrderId;
+
     @ApiModelProperty("商家id")
     private int merchantId;
 
@@ -34,6 +37,9 @@ public class PurchaseOrderRequest {
 
     @ApiModelProperty("供应商id")
     private int supplierId;
+
+    @ApiModelProperty("删除标识(0:正常， 1:已删除)")
+    private int delFlag = 0;
 
     @ApiModelProperty("采购订单详情")
     private List<PurchaseOrderDetailRequest> details = new ArrayList<>();

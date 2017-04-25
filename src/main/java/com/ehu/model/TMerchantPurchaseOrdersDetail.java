@@ -73,6 +73,12 @@ public class TMerchantPurchaseOrdersDetail {
     private String standard;
 
     /**
+     * 删除标识(0:正常， 1:已删除)
+     */
+    @Column(name = "del_flag")
+    private Integer delFlag;
+
+    /**
      * 获取商家采购订单详情id
      *
      * @return purchase_order_detail_id - 商家采购订单详情id
@@ -268,5 +274,23 @@ public class TMerchantPurchaseOrdersDetail {
      */
     public void setStandard(String standard) {
         this.standard = standard;
+    }
+
+    /**
+     * 获取删除标识(0:正常， 1:已删除)
+     *
+     * @return del_flag - 删除标识(0:正常， 1:已删除)
+     */
+    public Integer getDelFlag() {
+        return delFlag;
+    }
+
+    /**
+     * 设置删除标识(0:正常， 1:已删除)
+     *
+     * @param delFlag 删除标识(0:正常， 1:已删除)
+     */
+    public void setDelFlag(Integer delFlag) {
+        this.delFlag = delFlag;
     }
 }

@@ -1,6 +1,8 @@
 package com.ehu.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -11,7 +13,6 @@ public class TMerchantPurchaseOrder {
      */
     @Id
     @Column(name = "purchase_order_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer purchaseOrderId;
 
     /**
@@ -23,7 +24,7 @@ public class TMerchantPurchaseOrder {
     /**
      * 负责人
      */
-    @Column(name = "`person_in_charge`")
+    @Column(name = "person_in_charge")
     private String personInCharge;
 
     /**
@@ -39,12 +40,24 @@ public class TMerchantPurchaseOrder {
     private BigDecimal orderActualPrice;
 
     /**
+     * 审核状态(0:未审核，1:审核通过，2:审核驳回)
+     */
+    @Column(name = "verify_status")
+    private Integer verifyStatus;
+
+    /**
      * 备注
      */
     private String remark;
 
     /**
-     * 订单状态(0:订单成功 1:订单取消，2:异常)
+     * 删除标识(0:正常， 1:已删除)
+     */
+    @Column(name = "del_flag")
+    private Integer delFlag;
+
+    /**
+     * 订单状态(0:订单成功 1:订单取消，2:异常, 3:已合单)
      */
     @Column(name = "order_status")
     private Integer orderStatus;
@@ -112,7 +125,7 @@ public class TMerchantPurchaseOrder {
     /**
      * 获取负责人
      *
-     * @return person_in charge - 负责人
+     * @return person_in_charge - 负责人
      */
     public String getPersonInCharge() {
         return personInCharge;
@@ -164,6 +177,24 @@ public class TMerchantPurchaseOrder {
     }
 
     /**
+     * 获取审核状态(0:未审核，1:审核通过，2:审核驳回)
+     *
+     * @return verify_status - 审核状态(0:未审核，1:审核通过，2:审核驳回)
+     */
+    public Integer getVerifyStatus() {
+        return verifyStatus;
+    }
+
+    /**
+     * 设置审核状态(0:未审核，1:审核通过，2:审核驳回)
+     *
+     * @param verifyStatus 审核状态(0:未审核，1:审核通过，2:审核驳回)
+     */
+    public void setVerifyStatus(Integer verifyStatus) {
+        this.verifyStatus = verifyStatus;
+    }
+
+    /**
      * 获取备注
      *
      * @return remark - 备注
@@ -182,18 +213,36 @@ public class TMerchantPurchaseOrder {
     }
 
     /**
-     * 获取订单状态(0:订单成功 1:订单取消，2:异常)
+     * 获取删除标识(0:正常， 1:已删除)
      *
-     * @return order_status - 订单状态(0:订单成功 1:订单取消，2:异常)
+     * @return del_flag - 删除标识(0:正常， 1:已删除)
+     */
+    public Integer getDelFlag() {
+        return delFlag;
+    }
+
+    /**
+     * 设置删除标识(0:正常， 1:已删除)
+     *
+     * @param delFlag 删除标识(0:正常， 1:已删除)
+     */
+    public void setDelFlag(Integer delFlag) {
+        this.delFlag = delFlag;
+    }
+
+    /**
+     * 获取订单状态(0:订单成功 1:订单取消，2:异常, 3:已合单)
+     *
+     * @return order_status - 订单状态(0:订单成功 1:订单取消，2:异常, 3:已合单)
      */
     public Integer getOrderStatus() {
         return orderStatus;
     }
 
     /**
-     * 设置订单状态(0:订单成功 1:订单取消，2:异常)
+     * 设置订单状态(0:订单成功 1:订单取消，2:异常, 3:已合单)
      *
-     * @param orderStatus 订单状态(0:订单成功 1:订单取消，2:异常)
+     * @param orderStatus 订单状态(0:订单成功 1:订单取消，2:异常, 3:已合单)
      */
     public void setOrderStatus(Integer orderStatus) {
         this.orderStatus = orderStatus;

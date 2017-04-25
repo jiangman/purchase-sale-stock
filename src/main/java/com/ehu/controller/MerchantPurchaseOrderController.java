@@ -50,4 +50,22 @@ public class MerchantPurchaseOrderController {
     public Object queryOrders(@ApiIgnore PurchaseOrderQueryRequest request) {
         return purchaseOrderService.getOrders(request);
     }
+
+    @GetMapping("/{orderId}")
+    @ApiOperation("采购订单详情")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
+    public Object findDetail(@PathVariable(value = "orderId") int orderId) {
+        return purchaseOrderService.findDetail(orderId);
+    }
+
+    @PutMapping
+    @ApiOperation("修改采购订单")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
+    public Object updatePurchaseOrder(@RequestBody @Valid PurchaseOrderRequest request) throws Exception {
+        return purchaseOrderService.updateOrders(request);
+    }
 }

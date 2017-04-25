@@ -8,12 +8,16 @@ import com.ehu.mapper.TMerchantPurchaseOrderMapper;
 import com.ehu.mapper.TMerchantPurchaseOrdersDetailMapper;
 import com.ehu.model.TMerchantPurchaseOrder;
 import com.ehu.model.TMerchantPurchaseOrdersDetail;
+import com.ehu.model.TMerchantPurchaseOrdersDetailExample;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 商家端采购订单.
@@ -65,5 +69,35 @@ public class MerchantPurchaseOrderService {
      */
     public Object getOrders(PurchaseOrderQueryRequest request) {
         return orderMapper.queryOrders(request);
+    }
+
+    /**
+     * 查询详情
+     *
+     * @param orderId
+     * @return
+     */
+    public Object findDetail(int orderId) {
+        TMerchantPurchaseOrder merchantPurchaseOrder = orderMapper.selectByPrimaryKey(orderId);
+        TMerchantPurchaseOrdersDetailExample example = new TMerchantPurchaseOrdersDetailExample();
+        example.createCriteria().andDelFlagEqualTo(0).andPurchaseOrderIdEqualTo(orderId);
+        List<TMerchantPurchaseOrdersDetail> details = ordersDetailMapper.selectByExample(example);
+        Map<String, Object> result = new ObjectMapper().convertValue(merchantPurchaseOrder, Map.class);
+        result.put("details", details);
+        return result;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public Object updateOrders(PurchaseOrderRequest request) {
+        TMerchantPurchaseOrder merchantPurchaseOrder = orderMapper.selectByPrimaryKey(request.getPurchaseOrderId());
+        BeanUtils.copyProperties(request, merchantPurchaseOrder);
+        orderMapper.updateByPrimaryKey(merchantPurchaseOrder);
+
+        for (PurchaseOrderDetailRequest detailRequest : request.getDetails()) {
+            TMerchantPurchaseOrdersDetail ordersDetail = ordersDetailMapper.selectByPrimaryKey(detailRequest.getPurchaseOrderDetailId());
+            BeanUtils.copyProperties(detailRequest, ordersDetail);
+            ordersDetailMapper.updateByPrimaryKey(ordersDetail);
+        }
+        return merchantPurchaseOrder;
     }
 }

@@ -15,6 +15,9 @@ import java.math.BigDecimal;
 @Data
 @ApiModel
 public class PurchaseOrderDetailRequest {
+    @ApiModelProperty("商家采购订单详情id，新增时不需要传")
+    private int purchaseOrderDetailId;
+
     @ApiModelProperty("商品id")
     private int goodsId;
 
@@ -38,4 +41,7 @@ public class PurchaseOrderDetailRequest {
 
     @ApiModelProperty("箱规")
     private String standard;
+
+    @ApiModelProperty("删除标识(0:正常， 1:已删除)")
+    private int delFlag = 0;
 }

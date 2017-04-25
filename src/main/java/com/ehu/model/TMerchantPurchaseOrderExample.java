@@ -227,72 +227,72 @@ public class TMerchantPurchaseOrderExample {
         }
 
         public Criteria andPersonInChargeIsNull() {
-            addCriterion("`person_in charge` is null");
+            addCriterion("person_in_charge is null");
             return (Criteria) this;
         }
 
         public Criteria andPersonInChargeIsNotNull() {
-            addCriterion("`person_in charge` is not null");
+            addCriterion("person_in_charge is not null");
             return (Criteria) this;
         }
 
         public Criteria andPersonInChargeEqualTo(String value) {
-            addCriterion("`person_in charge` =", value, "personInCharge");
+            addCriterion("person_in_charge =", value, "personInCharge");
             return (Criteria) this;
         }
 
         public Criteria andPersonInChargeNotEqualTo(String value) {
-            addCriterion("`person_in charge` <>", value, "personInCharge");
+            addCriterion("person_in_charge <>", value, "personInCharge");
             return (Criteria) this;
         }
 
         public Criteria andPersonInChargeGreaterThan(String value) {
-            addCriterion("`person_in charge` >", value, "personInCharge");
+            addCriterion("person_in_charge >", value, "personInCharge");
             return (Criteria) this;
         }
 
         public Criteria andPersonInChargeGreaterThanOrEqualTo(String value) {
-            addCriterion("`person_in charge` >=", value, "personInCharge");
+            addCriterion("person_in_charge >=", value, "personInCharge");
             return (Criteria) this;
         }
 
         public Criteria andPersonInChargeLessThan(String value) {
-            addCriterion("`person_in charge` <", value, "personInCharge");
+            addCriterion("person_in_charge <", value, "personInCharge");
             return (Criteria) this;
         }
 
         public Criteria andPersonInChargeLessThanOrEqualTo(String value) {
-            addCriterion("`person_in charge` <=", value, "personInCharge");
+            addCriterion("person_in_charge <=", value, "personInCharge");
             return (Criteria) this;
         }
 
         public Criteria andPersonInChargeLike(String value) {
-            addCriterion("`person_in charge` like", value, "personInCharge");
+            addCriterion("person_in_charge like", value, "personInCharge");
             return (Criteria) this;
         }
 
         public Criteria andPersonInChargeNotLike(String value) {
-            addCriterion("`person_in charge` not like", value, "personInCharge");
+            addCriterion("person_in_charge not like", value, "personInCharge");
             return (Criteria) this;
         }
 
         public Criteria andPersonInChargeIn(List<String> values) {
-            addCriterion("`person_in charge` in", values, "personInCharge");
+            addCriterion("person_in_charge in", values, "personInCharge");
             return (Criteria) this;
         }
 
         public Criteria andPersonInChargeNotIn(List<String> values) {
-            addCriterion("`person_in charge` not in", values, "personInCharge");
+            addCriterion("person_in_charge not in", values, "personInCharge");
             return (Criteria) this;
         }
 
         public Criteria andPersonInChargeBetween(String value1, String value2) {
-            addCriterion("`person_in charge` between", value1, value2, "personInCharge");
+            addCriterion("person_in_charge between", value1, value2, "personInCharge");
             return (Criteria) this;
         }
 
         public Criteria andPersonInChargeNotBetween(String value1, String value2) {
-            addCriterion("`person_in charge` not between", value1, value2, "personInCharge");
+            addCriterion("person_in_charge not between", value1, value2, "personInCharge");
             return (Criteria) this;
         }
 
@@ -416,6 +416,66 @@ public class TMerchantPurchaseOrderExample {
             return (Criteria) this;
         }
 
+        public Criteria andVerifyStatusIsNull() {
+            addCriterion("verify_status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andVerifyStatusIsNotNull() {
+            addCriterion("verify_status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andVerifyStatusEqualTo(Integer value) {
+            addCriterion("verify_status =", value, "verifyStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andVerifyStatusNotEqualTo(Integer value) {
+            addCriterion("verify_status <>", value, "verifyStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andVerifyStatusGreaterThan(Integer value) {
+            addCriterion("verify_status >", value, "verifyStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andVerifyStatusGreaterThanOrEqualTo(Integer value) {
+            addCriterion("verify_status >=", value, "verifyStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andVerifyStatusLessThan(Integer value) {
+            addCriterion("verify_status <", value, "verifyStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andVerifyStatusLessThanOrEqualTo(Integer value) {
+            addCriterion("verify_status <=", value, "verifyStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andVerifyStatusIn(List<Integer> values) {
+            addCriterion("verify_status in", values, "verifyStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andVerifyStatusNotIn(List<Integer> values) {
+            addCriterion("verify_status not in", values, "verifyStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andVerifyStatusBetween(Integer value1, Integer value2) {
+            addCriterion("verify_status between", value1, value2, "verifyStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andVerifyStatusNotBetween(Integer value1, Integer value2) {
+            addCriterion("verify_status not between", value1, value2, "verifyStatus");
+            return (Criteria) this;
+        }
+
         public Criteria andRemarkIsNull() {
             addCriterion("remark is null");
             return (Criteria) this;
@@ -483,6 +543,66 @@ public class TMerchantPurchaseOrderExample {
 
         public Criteria andRemarkNotBetween(String value1, String value2) {
             addCriterion("remark not between", value1, value2, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagIsNull() {
+            addCriterion("del_flag is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagIsNotNull() {
+            addCriterion("del_flag is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagEqualTo(Integer value) {
+            addCriterion("del_flag =", value, "delFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagNotEqualTo(Integer value) {
+            addCriterion("del_flag <>", value, "delFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagGreaterThan(Integer value) {
+            addCriterion("del_flag >", value, "delFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagGreaterThanOrEqualTo(Integer value) {
+            addCriterion("del_flag >=", value, "delFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagLessThan(Integer value) {
+            addCriterion("del_flag <", value, "delFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagLessThanOrEqualTo(Integer value) {
+            addCriterion("del_flag <=", value, "delFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagIn(List<Integer> values) {
+            addCriterion("del_flag in", values, "delFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagNotIn(List<Integer> values) {
+            addCriterion("del_flag not in", values, "delFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagBetween(Integer value1, Integer value2) {
+            addCriterion("del_flag between", value1, value2, "delFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagNotBetween(Integer value1, Integer value2) {
+            addCriterion("del_flag not between", value1, value2, "delFlag");
             return (Criteria) this;
         }
 
