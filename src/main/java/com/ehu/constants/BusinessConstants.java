@@ -24,4 +24,9 @@ public interface BusinessConstants {
      * 已删除
      */
     int DEL_FLAG_DEL = 1;
+
+    /**
+     * 登陆失效时间，单位：小时
+     */
+    long EXPIRE_TIME = 2;
 }

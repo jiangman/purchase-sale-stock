@@ -7,7 +7,7 @@
     -->
     <id column="purchase_order_id" property="purchaseOrderId" jdbcType="INTEGER" />
     <result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
-    <result column="person_in charge" property="personInCharge" jdbcType="VARCHAR" />
+    <result column="person_in_charge" property="personInCharge" jdbcType="VARCHAR"/>
     <result column="order_total_price" property="orderTotalPrice" jdbcType="DECIMAL" />
     <result column="order_actual_price" property="orderActualPrice" jdbcType="DECIMAL" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
@@ -17,4 +17,26 @@
     <result column="create_by" property="createBy" jdbcType="VARCHAR" />
     <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
   </resultMap>
+
+  <select id="queryOrders" parameterType="com.ehu.bean.request.PurchaseOrderQueryRequest" resultMap="BaseResultMap">
+    select DISTINCT t1.* from t_merchant_purchase_order t1
+    <if test="goodsName != null">
+      INNER JOIN t_merchant_purchase_orders_detail t2 on t1.purchase_order_id = t2.purchase_order_id
+      and t2.goods_name like '%${goodsName}%'
+    </if>
+    where 1 = 1
+    <if test="startTime != null">
+      and t1.create_time <![CDATA[ >= ]]> #{startTime}
+    </if>
+    <if test="endTime != null">
+      and t1.create_time <![CDATA[ <= ]]> #{endTime}
+    </if>
+    <if test="merchantId != 0">
+      and t1.merchant_id = #{merchantId}
+    </if>
+    <if test="personInCharge != null">
+      and t1.person_in_charge like '%${personInCharge}%'
+    </if>
+    limit #{offset}, #{pageSize}
+  </select>
 </mapper>

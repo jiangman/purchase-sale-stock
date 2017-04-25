@@ -49,7 +49,7 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
         if (!token.equals(redisToken)) {
             throw new LoginValidationException(ErrorMessageConstants.ILLEGAL_TOKEN);
         }
-        SystemConstants.USER_TOKEN.setToken(token);
+        SystemConstants.USER_TOKEN = (UserToken) userToken;
         return true;
     }
 }

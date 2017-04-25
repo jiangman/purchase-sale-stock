@@ -19,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * write something to describe this file.
  *
@@ -52,6 +54,7 @@ public class SysUserService {
         query.setUserAccount(request.getUserAccount());
         SysUser sysUser = userMapper.selectOne(query);
         if (sysUser == null) {
+            // 如果用户查询不到，则到商家端表查询用户信息，给予相同的逻辑处理
             if (StringUtils.isNumeric(request.getUserAccount())) {
                 TMerchantUser merchantUserQuery = new TMerchantUser();
                 merchantUserQuery.setPhone(Long.valueOf(request.getUserAccount()));
@@ -63,7 +66,7 @@ public class SysUserService {
                         throw new LoginValidationException(ErrorMessageConstants.UNCORRECT_PWD);
                     }
                     String token = MathUtil.getToken();
-                    redisTemplate.opsForValue().set(BusinessConstants.STOCK_USER_KEY_HEAD + merchantUser.getPhone(), token);
+                    redisTemplate.opsForValue().set(BusinessConstants.STOCK_USER_KEY_HEAD + merchantUser.getPhone(), token, BusinessConstants.EXPIRE_TIME, TimeUnit.HOURS);
                     userToken.setUserName(merchantUser.getRealName());
                     userToken.setMerchant(true);
                     userToken.setToken(token);
@@ -72,7 +75,7 @@ public class SysUserService {
                     merchantUserInfo.setMuid(merchantUser.getGuid());
                     userToken.setMerchantId(merchantUserInfoMapper.selectOne(merchantUserInfo).getSmiid());
                     // 用户信息暂存redis
-                    redisTemplate.opsForValue().set(token, userToken);
+                    redisTemplate.opsForValue().set(token, userToken, BusinessConstants.EXPIRE_TIME, TimeUnit.HOURS);
                     return userToken;
                 }
             } else {
@@ -86,11 +89,11 @@ public class SysUserService {
             throw new LoginValidationException(ErrorMessageConstants.UNCORRECT_PWD);
         }
         String token = MathUtil.getToken();
-        redisTemplate.opsForValue().set(BusinessConstants.STOCK_USER_KEY_HEAD + sysUser.getUserAccount(), token);
+        redisTemplate.opsForValue().set(BusinessConstants.STOCK_USER_KEY_HEAD + sysUser.getUserAccount(), token, BusinessConstants.EXPIRE_TIME, TimeUnit.HOURS);
         BeanUtils.copyProperties(sysUser, userToken);
         userToken.setToken(token);
         // 用户信息暂存redis
-        redisTemplate.opsForValue().set(token, userToken);
+        redisTemplate.opsForValue().set(token, userToken, BusinessConstants.EXPIRE_TIME, TimeUnit.HOURS);
         return userToken;
     }
 
@@ -98,6 +101,7 @@ public class SysUserService {
      * 注销登录
      */
     public void logout() {
+        redisTemplate.delete(BusinessConstants.STOCK_USER_KEY_HEAD + SystemConstants.USER_TOKEN.getUserAccount());
         redisTemplate.delete(SystemConstants.USER_TOKEN.getToken());
     }
 }

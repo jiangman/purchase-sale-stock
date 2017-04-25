@@ -1,7 +1,9 @@
 package com.ehu.model;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.math.BigDecimal;
-import javax.persistence.*;
 
 @Table(name = "t_merchant_purchase_orders_detail")
 public class TMerchantPurchaseOrdersDetail {
@@ -17,6 +19,12 @@ public class TMerchantPurchaseOrdersDetail {
      */
     @Column(name = "purchase_order_id")
     private Integer purchaseOrderId;
+
+    /**
+     * 商品id
+     */
+    @Column(name = "goods_id")
+    private Integer goodsId;
 
     /**
      * 商品名称
@@ -98,6 +106,24 @@ public class TMerchantPurchaseOrdersDetail {
      */
     public void setPurchaseOrderId(Integer purchaseOrderId) {
         this.purchaseOrderId = purchaseOrderId;
+    }
+
+    /**
+     * 获取商品id
+     *
+     * @return goods_id - 商品id
+     */
+    public Integer getGoodsId() {
+        return goodsId;
+    }
+
+    /**
+     * 设置商品id
+     *
+     * @param goodsId 商品id
+     */
+    public void setGoodsId(Integer goodsId) {
+        this.goodsId = goodsId;
     }
 
     /**
