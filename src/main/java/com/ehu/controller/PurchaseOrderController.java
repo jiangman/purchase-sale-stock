@@ -2,6 +2,7 @@ package com.ehu.controller;
 
 import com.ehu.bean.request.MergeOrderRequest;
 import com.ehu.bean.request.PurchaseOrderQueryRequest;
+import com.ehu.bean.request.PurchaseOrderRequest;
 import com.ehu.service.PurchaseOrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -35,8 +36,8 @@ public class PurchaseOrderController {
         return purchaseOrderService.mergeOrders(request);
     }
 
-    @GetMapping
-    @ApiOperation("采购列表")
+    @GetMapping("/merchant")
+    @ApiOperation("商家采购列表")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "startTime", value = "开始时间", dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "endTime", value = "结束时间", dataType = "string", paramType = "query"),
@@ -49,5 +50,39 @@ public class PurchaseOrderController {
     })
     public Object queryOrders(@ApiIgnore PurchaseOrderQueryRequest request) {
         return purchaseOrderService.findMerchantOrders(request);
+    }
+
+    @GetMapping
+    @ApiOperation("合单后的采购列表")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "startTime", value = "开始时间", dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "endTime", value = "结束时间", dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "merchantId", value = "商家id", dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "personInCharge", value = "负责人", dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "goodsName", value = "商品名称", dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "pageNo", value = "页码", dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "pageSize", value = "每页条数", dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
+    public Object findOrders(@ApiIgnore PurchaseOrderQueryRequest request) {
+        return purchaseOrderService.findOrders(request);
+    }
+
+    @GetMapping("/{orderId}")
+    @ApiOperation("采购订单详情")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
+    public Object findDetail(@PathVariable(value = "orderId") int orderId) {
+        return purchaseOrderService.findDetail(orderId);
+    }
+
+    @PutMapping
+    @ApiOperation("修改采购订单")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
+    public Object updatePurchaseOrder(@RequestBody @Valid PurchaseOrderRequest request) {
+        return purchaseOrderService.updateOrders(request);
     }
 }

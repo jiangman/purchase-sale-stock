@@ -20,4 +20,8 @@ public class PurchaseOrderQueryRequest extends Page {
     private String personInCharge;
 
     private String goodsName;
+
+    private int payStatus;
+
+    private int verifyStatus;
 }

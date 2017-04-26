@@ -41,6 +41,12 @@ public class PurchaseOrderRequest {
     @ApiModelProperty("删除标识(0:正常， 1:已删除)")
     private int delFlag = 0;
 
+    @ApiModelProperty("付款状态(0:未付款，1:已付款)")
+    private int payStatus = 0;
+
+    @ApiModelProperty("审核状态(0:未审核，1:审核通过，2:驳回)")
+    private int verifyStatus = 0;
+
     @ApiModelProperty("采购订单详情")
     private List<PurchaseOrderDetailRequest> details = new ArrayList<>();
 }

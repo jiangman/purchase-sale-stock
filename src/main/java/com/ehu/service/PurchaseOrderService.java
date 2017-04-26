@@ -1,16 +1,17 @@
 package com.ehu.service;
 
 import com.ehu.bean.request.MergeOrderRequest;
+import com.ehu.bean.request.PurchaseOrderDetailRequest;
 import com.ehu.bean.request.PurchaseOrderQueryRequest;
+import com.ehu.bean.request.PurchaseOrderRequest;
 import com.ehu.mapper.TMerchantPurchaseOrderMapper;
 import com.ehu.mapper.TMerchantPurchaseOrdersDetailMapper;
 import com.ehu.mapper.TPurchaseOrderMapper;
 import com.ehu.mapper.TPurchaseOrdersDetailMapper;
-import com.ehu.model.TMerchantPurchaseOrdersDetail;
-import com.ehu.model.TMerchantPurchaseOrdersDetailExample;
-import com.ehu.model.TPurchaseOrder;
-import com.ehu.model.TPurchaseOrdersDetail;
+import com.ehu.model.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Maps;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -107,4 +108,48 @@ public class PurchaseOrderService {
         return purchaseOrder;
     }
 
+    /**
+     * 查询采购列表
+     *
+     * @param request
+     * @return
+     */
+    public Object findOrders(PurchaseOrderQueryRequest request) {
+        return orderMapper.queryOrders(request);
+    }
+
+    /**
+     * 查看详情
+     *
+     * @param orderId
+     * @return
+     */
+    public Object findDetail(int orderId) {
+        TPurchaseOrder purchaseOrder = orderMapper.selectByPrimaryKey(orderId);
+        TPurchaseOrderExample example = new TPurchaseOrderExample();
+        example.createCriteria().andDelFlagEqualTo(0).andPurchaseOrderIdEqualTo(orderId);
+        List<TPurchaseOrdersDetail> details = detailMapper.selectByExample(example);
+        Map<String, Object> result = new ObjectMapper().convertValue(purchaseOrder, Map.class);
+        result.put("details", details);
+        return result;
+    }
+
+    /**
+     * 修改订单
+     *
+     * @param request
+     * @return
+     */
+    public Object updateOrders(PurchaseOrderRequest request) {
+        TPurchaseOrder purchaseOrder = orderMapper.selectByPrimaryKey(request.getPurchaseOrderId());
+        BeanUtils.copyProperties(request, purchaseOrder);
+        orderMapper.updateByPrimaryKey(purchaseOrder);
+
+        for (PurchaseOrderDetailRequest detailRequest : request.getDetails()) {
+            TPurchaseOrdersDetail ordersDetail = detailMapper.selectByPrimaryKey(detailRequest.getPurchaseOrderDetailId());
+            BeanUtils.copyProperties(detailRequest, ordersDetail);
+            detailMapper.updateByPrimaryKey(ordersDetail);
+        }
+        return purchaseOrder;
+    }
 }

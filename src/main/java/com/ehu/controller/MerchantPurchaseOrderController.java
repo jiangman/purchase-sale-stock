@@ -67,7 +67,7 @@ public class MerchantPurchaseOrderController {
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "string", paramType = "header")
     })
-    public Object updatePurchaseOrder(@RequestBody @Valid PurchaseOrderRequest request) throws Exception {
+    public Object updatePurchaseOrder(@RequestBody @Valid PurchaseOrderRequest request) {
         return purchaseOrderService.updateOrders(request);
     }
 }
