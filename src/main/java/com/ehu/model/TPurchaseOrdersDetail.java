@@ -21,6 +21,12 @@ public class TPurchaseOrdersDetail {
     private Integer purchaseOrderId;
 
     /**
+     * 采购发布的商品id
+     */
+    @Column(name = "goods_id")
+    private Integer goodsId;
+
+    /**
      * 商品名称
      */
     @Column(name = "goods_name")
@@ -106,6 +112,24 @@ public class TPurchaseOrdersDetail {
      */
     public void setPurchaseOrderId(Integer purchaseOrderId) {
         this.purchaseOrderId = purchaseOrderId;
+    }
+
+    /**
+     * 获取采购发布的商品id
+     *
+     * @return goods_id - 采购发布的商品id
+     */
+    public Integer getGoodsId() {
+        return goodsId;
+    }
+
+    /**
+     * 设置采购发布的商品id
+     *
+     * @param goodsId 采购发布的商品id
+     */
+    public void setGoodsId(Integer goodsId) {
+        this.goodsId = goodsId;
     }
 
     /**

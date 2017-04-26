@@ -6,13 +6,19 @@ import com.ehu.mapper.TMerchantPurchaseOrderMapper;
 import com.ehu.mapper.TMerchantPurchaseOrdersDetailMapper;
 import com.ehu.mapper.TPurchaseOrderMapper;
 import com.ehu.mapper.TPurchaseOrdersDetailMapper;
-import com.ehu.model.*;
+import com.ehu.model.TMerchantPurchaseOrdersDetail;
+import com.ehu.model.TMerchantPurchaseOrdersDetailExample;
+import com.ehu.model.TPurchaseOrder;
+import com.ehu.model.TPurchaseOrdersDetail;
+import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * write something to describe this file.
@@ -53,6 +59,7 @@ public class PurchaseOrderService {
      * @param request
      * @return
      */
+    @Transactional(rollbackFor = Exception.class)
     public Object mergeOrders(MergeOrderRequest request) {
         // 1.查询商家提交的采购单详细信息
         TMerchantPurchaseOrdersDetailExample example = new TMerchantPurchaseOrdersDetailExample();
@@ -68,7 +75,7 @@ public class PurchaseOrderService {
             } else {
                 mergedList.add(detail);
             }
-            totalPrice.add(detail.getOrderPrice());
+            totalPrice = totalPrice.add(detail.getOrderPrice().multiply(new BigDecimal(detail.getOrderQuantity())));
         }
         // 3.生成合并后的采购单及采购详情，并添加到数据库
         TPurchaseOrder purchaseOrder = new TPurchaseOrder();
@@ -85,6 +92,7 @@ public class PurchaseOrderService {
             ordersDetail.setOrderQuantity(detail.getOrderQuantity());
             ordersDetail.setOrderPrice(detail.getOrderPrice());
             ordersDetail.setOrderDetailStatus(0);
+            ordersDetail.setGoodsId(detail.getGoodsId());
             ordersDetail.setStandard(detail.getStandard());
             ordersDetail.setDelFlag(0);
             ordersDetail.setGoodsName(detail.getGoodsName());
@@ -92,12 +100,11 @@ public class PurchaseOrderService {
         }
         detailMapper.insertList(details);
         // 4.修改商家采购单的状态为：已合单
-        TMerchantPurchaseOrderExample orderExample = new TMerchantPurchaseOrderExample();
-        orderExample.createCriteria().andPurchaseOrderIdIn(request.getOrderIds());
-        TMerchantPurchaseOrder order = new TMerchantPurchaseOrder();
-        order.setOrderStatus(3);
-        merchantPurchaseOrderMapper.updateByExample(order, orderExample);
-        return mergedList;
+        Map<String, Object> params = Maps.newHashMap();
+        params.put("list", request.getOrderIds());
+        params.put("mergedId", purchaseOrder.getPurchaseOrderId());
+        merchantPurchaseOrderMapper.updateOrderStatus(params);
+        return purchaseOrder;
     }
 
 }

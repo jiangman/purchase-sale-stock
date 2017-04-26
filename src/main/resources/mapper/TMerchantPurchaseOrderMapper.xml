@@ -41,4 +41,13 @@
     </if>
     limit #{offset}, #{pageSize}
   </select>
+
+  <update id="updateOrderStatus" parameterType="map">
+    update t_merchant_purchase_order set order_status = 3, merged_id = #{mergedId}
+    WHERE purchase_order_id IN
+    <foreach item="item" index="index" collection="list"
+             open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </update>
 </mapper>
