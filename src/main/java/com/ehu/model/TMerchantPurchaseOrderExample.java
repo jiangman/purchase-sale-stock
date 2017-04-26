@@ -166,6 +166,66 @@ public class TMerchantPurchaseOrderExample {
             return (Criteria) this;
         }
 
+        public Criteria andMergedIdIsNull() {
+            addCriterion("merged_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMergedIdIsNotNull() {
+            addCriterion("merged_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMergedIdEqualTo(Integer value) {
+            addCriterion("merged_id =", value, "mergedId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMergedIdNotEqualTo(Integer value) {
+            addCriterion("merged_id <>", value, "mergedId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMergedIdGreaterThan(Integer value) {
+            addCriterion("merged_id >", value, "mergedId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMergedIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("merged_id >=", value, "mergedId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMergedIdLessThan(Integer value) {
+            addCriterion("merged_id <", value, "mergedId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMergedIdLessThanOrEqualTo(Integer value) {
+            addCriterion("merged_id <=", value, "mergedId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMergedIdIn(List<Integer> values) {
+            addCriterion("merged_id in", values, "mergedId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMergedIdNotIn(List<Integer> values) {
+            addCriterion("merged_id not in", values, "mergedId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMergedIdBetween(Integer value1, Integer value2) {
+            addCriterion("merged_id between", value1, value2, "mergedId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMergedIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("merged_id not between", value1, value2, "mergedId");
+            return (Criteria) this;
+        }
+
         public Criteria andMerchantIdIsNull() {
             addCriterion("merchant_id is null");
             return (Criteria) this;

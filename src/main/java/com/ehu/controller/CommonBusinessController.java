@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
@@ -29,11 +30,33 @@ public class CommonBusinessController {
     @GetMapping("/goods")
     @ApiOperation("查询商品库中的商品")
     @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "firstMenuId", value = "一级菜单id", dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "secondMenuId", value = "二级菜单id", dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "searchText", value = "商品名称", dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "pageNo", value = "页码", dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "pageSize", value = "每页条数", dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "string", paramType = "header")
     })
     public Object queryGoods(@ApiIgnore GoodsInfoRequest request) {
         return businessService.queryGoods(request);
+    }
+
+    @GetMapping("/first_menus")
+    @ApiOperation("查询商品库一级菜单")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
+    public Object getFirstMenus() {
+        return businessService.getFirstMenus();
+    }
+
+    @GetMapping("/{firstMenuId}/second_menus")
+    @ApiOperation("查询商品库二级菜单")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
+    public Object getSecondMenus(@PathVariable(value = "firstMenuId") int firstMenuId) {
+        return businessService.getSecondMenus(firstMenuId);
     }
 
     @GetMapping("/merchants")

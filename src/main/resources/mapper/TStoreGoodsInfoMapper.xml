@@ -19,4 +19,44 @@
         <result column="valid_flag" jdbcType="INTEGER" property="validFlag"/>
         <result column="bar_code" jdbcType="VARCHAR" property="barCode"/>
     </resultMap>
+
+    <select id="queryGoods" resultMap="BaseResultMap" parameterType="com.ehu.bean.request.GoodsInfoRequest">
+        SELECT
+        t1.*
+        FROM
+        ehu.t_store_goods_info t1
+        INNER JOIN ehu.t_store_goods_menu_second t2 on t1.sgmsid = t2.sgmsid
+        <if test="secondMenuId != 0">
+            AND t2.sgmsid = #{secondMenuId}
+        </if>
+        INNER JOIN ehu.t_store_goods_menu_first t3 on t2.sgmfid = t3.sgmfid
+        <if test="firstMenuId != 0">
+            AND t3.sgmfid = #{firstMenuId}
+        </if>
+        WHERE t1.valid_flag = 1
+        <if test="searchText != null">
+            AND t1.sgi_name like '%${searchText}%'
+        </if>
+        ORDER BY t1.sgiid
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="queryGoodsCount" resultType="int" parameterType="com.ehu.bean.request.GoodsInfoRequest">
+        SELECT
+        IFNULL(COUNT(t1.sgiid), 0) totalCount
+        FROM
+        ehu.t_store_goods_info t1
+        INNER JOIN ehu.t_store_goods_menu_second t2 on t1.sgmsid = t2.sgmsid
+        <if test="secondMenuId != 0">
+            AND t2.sgmsid = #{secondMenuId}
+        </if>
+        INNER JOIN ehu.t_store_goods_menu_first t3 on t2.sgmfid = t3.sgmfid
+        <if test="firstMenuId != 0">
+            AND t3.sgmfid = #{firstMenuId}
+        </if>
+        WHERE t1.valid_flag = 1
+        <if test="searchText != null">
+            AND t1.sgi_name like '%${searchText}%'
+        </if>
+    </select>
 </mapper>

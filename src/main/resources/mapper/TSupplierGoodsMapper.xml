@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ehu.mapper.TSupplierGoodsMapper">
+    <resultMap id="BaseResultMap" type="com.ehu.model.TSupplierGoods">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="goods_id" jdbcType="INTEGER" property="goodsId"/>
+        <result column="supplier_id" jdbcType="INTEGER" property="supplierId"/>
+        <result column="standard" jdbcType="VARCHAR" property="standard"/>
+        <result column="standard_value" jdbcType="INTEGER" property="standardValue"/>
+        <result column="min_order_quantity" jdbcType="INTEGER" property="minOrderQuantity"/>
+        <result column="cost price" jdbcType="DECIMAL" property="costPrice"/>
+        <result column="sgiid" jdbcType="INTEGER" property="sgiid"/>
+        <result column="del_flag" jdbcType="INTEGER" property="delFlag"/>
+    </resultMap>
+
+    <select id="getGoods" parameterType="com.ehu.bean.request.SupplierGoodsRequest" resultType="map">
+        select t1.*, t2.sgi_name,t2.sgi_icon from t_supplier_goods t1
+        INNER JOIN t_store_goods_info t2 on t1.sgiid = t2.sgiid
+        <if test="searchText != null">
+            AND t2.sgi_name like '%${searchText}%'
+        </if>
+        INNER JOIN ehu.t_store_goods_menu_second t3 on t2.sgmsid = t3.sgmsid
+        <if test="secondMenuId != 0">
+            AND t2.sgmsid = #{secondMenuId}
+        </if>
+        INNER JOIN ehu.t_store_goods_menu_first t4 on t3.sgmfid = t4.sgmfid
+        <if test="firstMenuId != 0">
+            AND t3.sgmfid = #{firstMenuId}
+        </if>
+        WHERE t1.del_flag = 0
+        <if test="supplierId != 0">
+            AND t1.supplier_id = #{supplierId}
+        </if>
+        ORDER BY t1.sgiid
+        LIMIT #{offset}, #{pageSize}
+    </select>
+    <select id="getGoodsCount" parameterType="com.ehu.bean.request.SupplierGoodsRequest" resultType="int">
+        select IFNULL(COUNT(t1.goods_id), 0) totalCount from t_supplier_goods t1
+        INNER JOIN t_store_goods_info t2 on t1.sgiid = t2.sgiid
+        <if test="searchText != null">
+            AND t2.sgi_name like '%${searchText}%'
+        </if>
+        INNER JOIN ehu.t_store_goods_menu_second t3 on t2.sgmsid = t3.sgmsid
+        <if test="secondMenuId != 0">
+            AND t2.sgmsid = #{secondMenuId}
+        </if>
+        INNER JOIN ehu.t_store_goods_menu_first t4 on t3.sgmfid = t4.sgmfid
+        <if test="firstMenuId != 0">
+            AND t3.sgmfid = #{firstMenuId}
+        </if>
+        WHERE t1.del_flag = 0
+        <if test="supplierId != 0">
+            AND t1.supplier_id = #{supplierId}
+        </if>
+    </select>
+
+    <select id="getGoodsDetail" parameterType="int" resultType="map">
+        select t1.*, t2.sgi_name, t2.sgi_img from t_supplier_goods t1
+        INNER JOIN t_store_goods_info t2 on t1.sgiid = t2.sgiid
+        WHERE t1.goods_id = #{goodsId}
+    </select>
+
+    <select id="getSupplierFirstMenus" parameterType="com.ehu.bean.request.SupplierMenuRequest" resultType="map">
+        SELECT
+          DISTINCT t4.*
+        FROM
+          t_supplier_goods t1
+        INNER JOIN t_store_goods_info t2 ON t1.sgiid = t2.sgiid
+        INNER JOIN t_store_goods_menu_second t3 on t2.sgmsid = t3.sgmsid
+        INNER JOIN t_store_goods_menu_first t4 on t3.sgmfid = t4.sgmfid
+        WHERE t1.supplier_id = #{supplierId}
+    </select>
+
+    <select id="getSupplierSecondMenus" parameterType="com.ehu.bean.request.SupplierMenuRequest" resultType="map">
+        SELECT
+          DISTINCT t3.*
+        FROM
+          t_supplier_goods t1
+        INNER JOIN t_store_goods_info t2 ON t1.sgiid = t2.sgiid
+        INNER JOIN t_store_goods_menu_second t3 on t2.sgmsid = t3.sgmsid
+        INNER JOIN t_store_goods_menu_first t4 on t3.sgmfid = t4.sgmfid AND t4.sgmfid = #{firstMenuId}
+        WHERE t1.supplier_id = #{supplierId}
+    </select>
+</mapper>

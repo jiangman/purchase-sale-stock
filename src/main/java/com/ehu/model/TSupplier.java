@@ -63,6 +63,12 @@ public class TSupplier {
     private Integer delFlag;
 
     /**
+     * 是否默认(0:否，1:是)
+     */
+    @Column(name = "is_default")
+    private Integer isDefault;
+
+    /**
      * 获取供应商id
      *
      * @return supplier_id - 供应商id
@@ -240,5 +246,23 @@ public class TSupplier {
      */
     public void setDelFlag(Integer delFlag) {
         this.delFlag = delFlag;
+    }
+
+    /**
+     * 获取是否默认(0:否，1:是)
+     *
+     * @return is_default - 是否默认(0:否，1:是)
+     */
+    public Integer getIsDefault() {
+        return isDefault;
+    }
+
+    /**
+     * 设置是否默认(0:否，1:是)
+     *
+     * @param isDefault 是否默认(0:否，1:是)
+     */
+    public void setIsDefault(Integer isDefault) {
+        this.isDefault = isDefault;
     }
 }

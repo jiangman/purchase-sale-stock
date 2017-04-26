@@ -1,8 +1,6 @@
 package com.ehu.model;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -13,7 +11,14 @@ public class TMerchantPurchaseOrder {
      */
     @Id
     @Column(name = "purchase_order_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer purchaseOrderId;
+
+    /**
+     * 合单后的采购单id
+     */
+    @Column(name = "merged_id")
+    private Integer mergedId;
 
     /**
      * 商家id
@@ -102,6 +107,24 @@ public class TMerchantPurchaseOrder {
      */
     public void setPurchaseOrderId(Integer purchaseOrderId) {
         this.purchaseOrderId = purchaseOrderId;
+    }
+
+    /**
+     * 获取合单后的采购单id
+     *
+     * @return merged_id - 合单后的采购单id
+     */
+    public Integer getMergedId() {
+        return mergedId;
+    }
+
+    /**
+     * 设置合单后的采购单id
+     *
+     * @param mergedId 合单后的采购单id
+     */
+    public void setMergedId(Integer mergedId) {
+        this.mergedId = mergedId;
     }
 
     /**

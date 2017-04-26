@@ -1,8 +1,6 @@
 package com.ehu.model;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Table(name = "t_purchase_order")
@@ -12,6 +10,7 @@ public class TPurchaseOrder {
      */
     @Id
     @Column(name = "purchase_order_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer purchaseOrderId;
 
     /**
