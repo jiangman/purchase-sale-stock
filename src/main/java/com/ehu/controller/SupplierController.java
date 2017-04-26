@@ -55,4 +55,13 @@ public class SupplierController {
     public Object updateSupplier(@RequestBody @Valid SupplierRequest request) {
         return supplierService.updateSupplier(request);
     }
+
+    @GetMapping("/{supplierId}")
+    @ApiOperation("供应商详情")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
+    public Object findDetail(@PathVariable(value = "supplierId") int supplierId) {
+        return supplierService.findDetail(supplierId);
+    }
 }

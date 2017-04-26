@@ -2,6 +2,7 @@ package com.ehu.controller;
 
 import com.ehu.bean.request.PurchaseOrderQueryRequest;
 import com.ehu.bean.request.PurchaseOrderRequest;
+import com.ehu.constants.SystemConstants;
 import com.ehu.service.MerchantPurchaseOrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -48,6 +49,7 @@ public class MerchantPurchaseOrderController {
             @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "string", paramType = "header")
     })
     public Object queryOrders(@ApiIgnore PurchaseOrderQueryRequest request) {
+        request.setMerchantId(SystemConstants.USER_TOKEN.getMerchantId());
         return purchaseOrderService.getOrders(request);
     }
 

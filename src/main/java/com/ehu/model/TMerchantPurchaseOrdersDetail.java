@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 @Table(name = "t_merchant_purchase_orders_detail")
 public class TMerchantPurchaseOrdersDetail {
@@ -77,6 +78,24 @@ public class TMerchantPurchaseOrdersDetail {
      */
     @Column(name = "del_flag")
     private Integer delFlag;
+
+    public TMerchantPurchaseOrdersDetail() {
+    }
+
+    public TMerchantPurchaseOrdersDetail(Integer purchaseOrderDetailId, Integer purchaseOrderId, Integer goodsId, String goodsName, Integer orderQuantity, Integer actualQuantity, BigDecimal orderPrice, BigDecimal actualPrice, String remark, Integer orderDetailStatus, String standard, Integer delFlag) {
+        this.purchaseOrderDetailId = purchaseOrderDetailId;
+        this.purchaseOrderId = purchaseOrderId;
+        this.goodsId = goodsId;
+        this.goodsName = goodsName;
+        this.orderQuantity = orderQuantity;
+        this.actualQuantity = actualQuantity;
+        this.orderPrice = orderPrice;
+        this.actualPrice = actualPrice;
+        this.remark = remark;
+        this.orderDetailStatus = orderDetailStatus;
+        this.standard = standard;
+        this.delFlag = delFlag;
+    }
 
     /**
      * 获取商家采购订单详情id
@@ -292,5 +311,25 @@ public class TMerchantPurchaseOrdersDetail {
      */
     public void setDelFlag(Integer delFlag) {
         this.delFlag = delFlag;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        TMerchantPurchaseOrdersDetail detail = (TMerchantPurchaseOrdersDetail) obj;
+        return Objects.equals(goodsId, detail.getGoodsId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(orderQuantity);
+    }
+
+    public TMerchantPurchaseOrdersDetail merge(TMerchantPurchaseOrdersDetail other) {
+        return new TMerchantPurchaseOrdersDetail(this.purchaseOrderDetailId, this.purchaseOrderId,
+                this.goodsId, this.goodsName, this.orderQuantity + other.getOrderQuantity(),
+                this.actualQuantity, this.orderPrice, this.actualPrice, this.remark,
+                this.orderDetailStatus, this.standard, this.delFlag);
     }
 }

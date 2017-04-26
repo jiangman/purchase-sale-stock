@@ -1,19 +1,21 @@
 package com.ehu.model;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.math.BigDecimal;
-import javax.persistence.*;
 
 @Table(name = "t_purchase_orders_detail")
 public class TPurchaseOrdersDetail {
     /**
-     * 商家采购订单详情id
+     * 采购订单详情id
      */
     @Id
     @Column(name = "purchase_order_detail_id")
     private Integer purchaseOrderDetailId;
 
     /**
-     * 商家采购订单id
+     * 采购订单id
      */
     @Column(name = "purchase_order_id")
     private Integer purchaseOrderId;
@@ -65,36 +67,42 @@ public class TPurchaseOrdersDetail {
     private String standard;
 
     /**
-     * 获取商家采购订单详情id
+     * 删除标识(0:正常， 1:已删除)
+     */
+    @Column(name = "del_flag")
+    private Integer delFlag;
+
+    /**
+     * 获取采购订单详情id
      *
-     * @return purchase_order_detail_id - 商家采购订单详情id
+     * @return purchase_order_detail_id - 采购订单详情id
      */
     public Integer getPurchaseOrderDetailId() {
         return purchaseOrderDetailId;
     }
 
     /**
-     * 设置商家采购订单详情id
+     * 设置采购订单详情id
      *
-     * @param purchaseOrderDetailId 商家采购订单详情id
+     * @param purchaseOrderDetailId 采购订单详情id
      */
     public void setPurchaseOrderDetailId(Integer purchaseOrderDetailId) {
         this.purchaseOrderDetailId = purchaseOrderDetailId;
     }
 
     /**
-     * 获取商家采购订单id
+     * 获取采购订单id
      *
-     * @return purchase_order_id - 商家采购订单id
+     * @return purchase_order_id - 采购订单id
      */
     public Integer getPurchaseOrderId() {
         return purchaseOrderId;
     }
 
     /**
-     * 设置商家采购订单id
+     * 设置采购订单id
      *
-     * @param purchaseOrderId 商家采购订单id
+     * @param purchaseOrderId 采购订单id
      */
     public void setPurchaseOrderId(Integer purchaseOrderId) {
         this.purchaseOrderId = purchaseOrderId;
@@ -242,5 +250,23 @@ public class TPurchaseOrdersDetail {
      */
     public void setStandard(String standard) {
         this.standard = standard;
+    }
+
+    /**
+     * 获取删除标识(0:正常， 1:已删除)
+     *
+     * @return del_flag - 删除标识(0:正常， 1:已删除)
+     */
+    public Integer getDelFlag() {
+        return delFlag;
+    }
+
+    /**
+     * 设置删除标识(0:正常， 1:已删除)
+     *
+     * @param delFlag 删除标识(0:正常， 1:已删除)
+     */
+    public void setDelFlag(Integer delFlag) {
+        this.delFlag = delFlag;
     }
 }

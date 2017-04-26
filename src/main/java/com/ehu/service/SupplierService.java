@@ -49,6 +49,16 @@ public class SupplierService {
     }
 
     /**
+     * 查询详情
+     *
+     * @param supplierId
+     * @return
+     */
+    public Object findDetail(int supplierId) {
+        return supplierMapper.selectByPrimaryKey(supplierId);
+    }
+
+    /**
      * 修改供应商
      *
      * @param request

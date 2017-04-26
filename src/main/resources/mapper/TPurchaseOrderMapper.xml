@@ -1,18 +1,19 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ehu.mapper.TPurchaseOrderMapper" >
-  <resultMap id="BaseResultMap" type="com.ehu.model.TPurchaseOrder" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ehu.mapper.TPurchaseOrderMapper">
+    <resultMap id="BaseResultMap" type="com.ehu.model.TPurchaseOrder">
     <!--
       WARNING - @mbg.generated
     -->
-    <id column="purchase_order_id" property="purchaseOrderId" jdbcType="INTEGER" />
-    <result column="supplier_id" property="supplierId" jdbcType="INTEGER" />
-    <result column="person_in_charge" property="personInCharge" jdbcType="VARCHAR" />
-    <result column="order_total" property="orderTotal" jdbcType="DECIMAL" />
-    <result column="order_actual" property="orderActual" jdbcType="DECIMAL" />
-    <result column="remark" property="remark" jdbcType="VARCHAR" />
-    <result column="order_status" property="orderStatus" jdbcType="INTEGER" />
-    <result column="pay_status" property="payStatus" jdbcType="INTEGER" />
-    <result column="verify_status" property="verifyStatus" jdbcType="INTEGER" />
+        <id column="purchase_order_id" jdbcType="INTEGER" property="purchaseOrderId"/>
+        <result column="supplier_id" jdbcType="INTEGER" property="supplierId"/>
+        <result column="person_in_charge" jdbcType="VARCHAR" property="personInCharge"/>
+        <result column="order_total" jdbcType="DECIMAL" property="orderTotal"/>
+        <result column="order_actual" jdbcType="DECIMAL" property="orderActual"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="order_status" jdbcType="INTEGER" property="orderStatus"/>
+        <result column="pay_status" jdbcType="INTEGER" property="payStatus"/>
+        <result column="verify_status" jdbcType="INTEGER" property="verifyStatus"/>
+        <result column="del_flag" jdbcType="INTEGER" property="delFlag"/>
   </resultMap>
 </mapper>

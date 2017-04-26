@@ -1,7 +1,9 @@
 package com.ehu.model;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.math.BigDecimal;
-import javax.persistence.*;
 
 @Table(name = "t_purchase_order")
 public class TPurchaseOrder {
@@ -58,6 +60,12 @@ public class TPurchaseOrder {
      */
     @Column(name = "verify_status")
     private Integer verifyStatus;
+
+    /**
+     * 删除标识(0:正常， 1:已删除)
+     */
+    @Column(name = "del_flag")
+    private Integer delFlag;
 
     /**
      * 获取采购订单id
@@ -219,5 +227,23 @@ public class TPurchaseOrder {
      */
     public void setVerifyStatus(Integer verifyStatus) {
         this.verifyStatus = verifyStatus;
+    }
+
+    /**
+     * 获取删除标识(0:正常， 1:已删除)
+     *
+     * @return del_flag - 删除标识(0:正常， 1:已删除)
+     */
+    public Integer getDelFlag() {
+        return delFlag;
+    }
+
+    /**
+     * 设置删除标识(0:正常， 1:已删除)
+     *
+     * @param delFlag 删除标识(0:正常， 1:已删除)
+     */
+    public void setDelFlag(Integer delFlag) {
+        this.delFlag = delFlag;
     }
 }
