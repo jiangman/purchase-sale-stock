@@ -1,6 +1,10 @@
 package com.ehu.bean;
 
+import com.ehu.bean.response.SystemMenu;
 import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * write something to describe this file.
@@ -29,4 +33,6 @@ public class UserToken {
     private boolean isMerchant;
 
     private int merchantId;
+
+    private List<SystemMenu> menus = new ArrayList<>();
 }

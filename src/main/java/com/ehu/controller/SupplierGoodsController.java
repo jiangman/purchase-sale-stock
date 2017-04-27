@@ -63,7 +63,7 @@ public class SupplierGoodsController {
     @GetMapping("/first_menus")
     @ApiOperation("查询供应商一级商品菜单")
     @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "supplierId", value = "供应商id", required = true, dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "supplierId", value = "供应商id", dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "string", paramType = "header")
     })
     public Object getSupplierFirstMenus(@ApiIgnore SupplierMenuRequest request) {
@@ -73,7 +73,7 @@ public class SupplierGoodsController {
     @GetMapping("/second_menus")
     @ApiOperation("查询供应商二级商品菜单")
     @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "supplierId", value = "供应商id", required = true, dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "supplierId", value = "供应商id", dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "firstMenuId", value = "一级菜单id", required = true, dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "string", paramType = "header")
     })

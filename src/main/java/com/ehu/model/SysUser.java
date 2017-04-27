@@ -3,7 +3,7 @@ package com.ehu.model;
 import javax.persistence.*;
 import java.util.Date;
 
-@Table(name = "ehu.sys_user")
+@Table(name = "sys_user")
 public class SysUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

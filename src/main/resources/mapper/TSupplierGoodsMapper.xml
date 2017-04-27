@@ -70,7 +70,10 @@
         INNER JOIN t_store_goods_info t2 ON t1.sgiid = t2.sgiid
         INNER JOIN t_store_goods_menu_second t3 on t2.sgmsid = t3.sgmsid
         INNER JOIN t_store_goods_menu_first t4 on t3.sgmfid = t4.sgmfid
-        WHERE t1.supplier_id = #{supplierId}
+        WHERE 1 = 1
+        <if test="supplierId != 0">
+            AND t1.supplier_id = #{supplierId}
+        </if>
     </select>
 
     <select id="getSupplierSecondMenus" parameterType="com.ehu.bean.request.SupplierMenuRequest" resultType="map">
@@ -81,6 +84,9 @@
         INNER JOIN t_store_goods_info t2 ON t1.sgiid = t2.sgiid
         INNER JOIN t_store_goods_menu_second t3 on t2.sgmsid = t3.sgmsid
         INNER JOIN t_store_goods_menu_first t4 on t3.sgmfid = t4.sgmfid AND t4.sgmfid = #{firstMenuId}
-        WHERE t1.supplier_id = #{supplierId}
+        WHERE 1 = 1
+        <if test="supplierId != 0">
+            AND t1.supplier_id = #{supplierId}
+        </if>
     </select>
 </mapper>

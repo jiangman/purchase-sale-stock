@@ -16,4 +16,19 @@
     <result column="department_id" property="departmentId" jdbcType="INTEGER" />
     <result column="company_id" property="companyId" jdbcType="INTEGER" />
   </resultMap>
+
+    <select id="getUserMenus" parameterType="int" resultType="com.ehu.bean.response.SystemMenu">
+      SELECT
+        DISTINCT
+        t1.menu_code menuCode,
+	    t1.menu_name menuName,
+	    t1.menu_url menuUrl,
+	    t1.parent_code parentCode
+      FROM
+          sys_menu t1
+      INNER JOIN sys_role_menu t2 ON t1.id = t2.menu_id
+      INNER JOIN sys_role_user t3 ON t2.role_id = t3.role_id
+      INNER JOIN sys_user t4 ON t3.user_id = #{userId}
+      WHERE t1.menu_status = 1
+  </select>
 </mapper>

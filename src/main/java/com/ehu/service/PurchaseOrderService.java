@@ -131,6 +131,9 @@ public class PurchaseOrderService {
         List<TPurchaseOrdersDetail> details = detailMapper.selectByExample(example);
         Map<String, Object> result = new ObjectMapper().convertValue(purchaseOrder, Map.class);
         result.put("details", details);
+        TMerchantPurchaseOrderExample orderExample = new TMerchantPurchaseOrderExample();
+        orderExample.createCriteria().andMergedIdEqualTo(purchaseOrder.getPurchaseOrderId());
+        result.put("mergedFrom", merchantPurchaseOrderMapper.selectByExample(orderExample));
         return result;
     }
 

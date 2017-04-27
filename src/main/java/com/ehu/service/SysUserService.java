@@ -2,6 +2,7 @@ package com.ehu.service;
 
 import com.ehu.bean.UserToken;
 import com.ehu.bean.request.LoginRequest;
+import com.ehu.bean.response.SystemMenu;
 import com.ehu.constants.BusinessConstants;
 import com.ehu.constants.ErrorMessageConstants;
 import com.ehu.constants.SystemConstants;
@@ -13,12 +14,16 @@ import com.ehu.model.SysUser;
 import com.ehu.model.TMerchantUser;
 import com.ehu.model.TMerchantUserInfo;
 import com.ehu.util.MathUtil;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -92,9 +97,42 @@ public class SysUserService {
         redisTemplate.opsForValue().set(BusinessConstants.STOCK_USER_KEY_HEAD + sysUser.getUserAccount(), token, BusinessConstants.EXPIRE_TIME, TimeUnit.HOURS);
         BeanUtils.copyProperties(sysUser, userToken);
         userToken.setToken(token);
+        userToken.setMenus(getMenuTree(sysUser.getId()));
         // 用户信息暂存redis
         redisTemplate.opsForValue().set(token, userToken, BusinessConstants.EXPIRE_TIME, TimeUnit.HOURS);
         return userToken;
+    }
+
+    private List<SystemMenu> getMenuTree(int userId) {
+        List<SystemMenu> menus = userMapper.getUserMenus(userId);
+        List<SystemMenu> parentMenus = Lists.newArrayList(Collections2.filter(menus, new Predicate<SystemMenu>() {
+            @Override
+            public boolean apply(SystemMenu systemMenu) {
+                return systemMenu.getParentCode() == 1;
+            }
+        }));
+        for (SystemMenu menu : parentMenus) {
+            menu.setSubMenu(getChildMenus(menu.getMenuCode(), menus));
+        }
+        return parentMenus;
+    }
+
+    private List<SystemMenu> getChildMenus(int menuCode, List<SystemMenu> menus) {
+        List<SystemMenu> childMenus = Lists.newArrayList();
+        for (SystemMenu menu : menus) {
+            if (menu.getParentCode() == menuCode) {
+                childMenus.add(menu);
+            }
+        }
+
+        for (SystemMenu menu : childMenus) {
+            menu.setSubMenu(getChildMenus(menu.getMenuCode(), menus));
+        }
+
+        if (childMenus.size() == 0) {
+            return null;
+        }
+        return childMenus;
     }
 
     /**
