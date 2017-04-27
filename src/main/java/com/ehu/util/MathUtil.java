@@ -119,7 +119,7 @@ public class MathUtil {
      * @return
      */
     public static String md5Encryption(String plainText) {
-        String re_md5 = new String();
+        String re_md5 = "";
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(plainText.getBytes());

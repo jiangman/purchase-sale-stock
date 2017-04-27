@@ -59,7 +59,7 @@ public class ApiExceptionHandler implements ResponseBodyAdvice<Object> {
     @ResponseBody
     public Response handleBusinessErrorException(BusinessErrorException ex) {
         ex.printStackTrace();
-        return new Response(Integer.valueOf(ex.getCode()), ex.getMessage(), null, new Date());
+        return new Response(Integer.parseInt(ex.getCode()), ex.getMessage(), null, new Date());
     }
 
     /**
@@ -89,11 +89,11 @@ public class ApiExceptionHandler implements ResponseBodyAdvice<Object> {
             MethodArgumentNotValidException ex) {
         ex.printStackTrace();
         BindingResult bindingResult = ex.getBindingResult();
-        String errorMesssage = "";
+        StringBuffer errorMesssage = new StringBuffer();
         for (FieldError fieldError : bindingResult.getFieldErrors()) {
-            errorMesssage += fieldError.getDefaultMessage() + "<br>";
+            errorMesssage.append(fieldError.getDefaultMessage() + "<br>");
         }
-        return new Response(HttpStatus.BAD_REQUEST.value(), errorMesssage, null, new Date());
+        return new Response(HttpStatus.BAD_REQUEST.value(), errorMesssage.toString(), null, new Date());
     }
 
     /**
