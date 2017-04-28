@@ -17,7 +17,7 @@
     <result column="company_id" property="companyId" jdbcType="INTEGER" />
   </resultMap>
 
-    <select id="getUserMenus" parameterType="int" resultType="com.ehu.bean.response.SystemMenu">
+  <select id="getUserMenus" parameterType="int" resultType="com.ehu.bean.response.SystemMenu">
       SELECT
         DISTINCT
         t1.menu_code menuCode,
@@ -31,4 +31,8 @@
       INNER JOIN sys_user t4 ON t3.user_id = #{userId}
       WHERE t1.menu_status = 1
   </select>
+
+  <update id="updatePwd" parameterType="com.ehu.bean.request.UpdatePwdRequest">
+      update sys_user set user_password = #{newPwd} where id = #{userId}
+  </update>
 </mapper>

@@ -1,6 +1,8 @@
 package com.ehu.controller;
 
 import com.ehu.bean.request.LoginRequest;
+import com.ehu.bean.request.UpdatePwdRequest;
+import com.ehu.exceptions.BusinessErrorException;
 import com.ehu.exceptions.LoginValidationException;
 import com.ehu.service.SysUserService;
 import io.swagger.annotations.Api;
@@ -39,6 +41,15 @@ public class SysUserController {
     })
     public void logout() {
         userService.logout();
+    }
+
+    @PutMapping("/update_pwd")
+    @ApiOperation("修改密码")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
+    public Object updatePwd(@RequestBody @Valid UpdatePwdRequest request) throws BusinessErrorException {
+        return userService.updatePwd(request);
     }
 
     @GetMapping("/test")

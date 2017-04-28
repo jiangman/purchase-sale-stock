@@ -2,10 +2,12 @@ package com.ehu.service;
 
 import com.ehu.bean.UserToken;
 import com.ehu.bean.request.LoginRequest;
+import com.ehu.bean.request.UpdatePwdRequest;
 import com.ehu.bean.response.SystemMenu;
 import com.ehu.constants.BusinessConstants;
 import com.ehu.constants.ErrorMessageConstants;
 import com.ehu.constants.SystemConstants;
+import com.ehu.exceptions.BusinessErrorException;
 import com.ehu.exceptions.LoginValidationException;
 import com.ehu.mapper.SysUserMapper;
 import com.ehu.mapper.TMerchantUserInfoMapper;
@@ -141,5 +143,23 @@ public class SysUserService {
     public void logout() {
         redisTemplate.delete(BusinessConstants.STOCK_USER_KEY_HEAD + SystemConstants.USER_TOKEN.getUserAccount());
         redisTemplate.delete(SystemConstants.USER_TOKEN.getToken());
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param request
+     * @return
+     */
+    public Object updatePwd(UpdatePwdRequest request) throws BusinessErrorException {
+        SysUser sysUser = userMapper.selectByPrimaryKey(request.getUserId());
+        if (sysUser != null) {
+            if (sysUser.getUserPassword() != request.getOldPwd()) {
+                throw new BusinessErrorException("1000", "密码错误");
+            }
+        } else {
+            throw new BusinessErrorException("1001", "用户不存在");
+        }
+        return userMapper.updatePwd(request);
     }
 }
