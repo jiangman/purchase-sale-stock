@@ -1,5 +1,6 @@
 package com.ehu.controller;
 
+import com.ehu.bean.request.MerchantOrderDetailRequest;
 import com.ehu.bean.request.PurchaseOrderQueryRequest;
 import com.ehu.bean.request.PurchaseOrderRequest;
 import com.ehu.constants.SystemConstants;
@@ -69,5 +70,35 @@ public class MerchantPurchaseOrderController {
     })
     public Object updatePurchaseOrder(@RequestBody @Valid PurchaseOrderRequest request) {
         return purchaseOrderService.updateOrders(request);
+    }
+
+    @GetMapping("/{orderId}/detail/first_menu")
+    @ApiOperation("采购订单详情商品一级菜单")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
+    public Object getDetailFirstMenu(@PathVariable(value = "orderId") int orderId) {
+        return purchaseOrderService.getDetailFirstMenu(orderId);
+    }
+
+    @GetMapping("/{orderId}/detail/{firstMenuId}")
+    @ApiOperation("采购订单详情商品二级菜单")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
+    public Object getDetailSecondMenu(@PathVariable(value = "orderId") int orderId, @PathVariable(value = "firstMenuId") int firstMenuId) {
+        return purchaseOrderService.getDetailSecondMenu(orderId, firstMenuId);
+    }
+
+    @GetMapping("/detail/goods")
+    @ApiOperation("查询详情商品")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "firstMenuId", value = "一级菜单id", dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "secondMenuId", value = "二级菜单id", dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "orderId", value = "采购单id", required = true, dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
+    public Object getOrderDetailGoods(@ApiIgnore MerchantOrderDetailRequest request) {
+        return purchaseOrderService.getOrderDetailGoods(request);
     }
 }

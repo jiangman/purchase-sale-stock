@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface TMerchantPurchaseOrderMapper extends MyMapper<TMerchantPurchaseOrder> {
-    List<TMerchantPurchaseOrder> queryOrders(PurchaseOrderQueryRequest request);
+    List<Map<String, Object>> queryOrders(PurchaseOrderQueryRequest request);
 
     int updateOrderStatus(Map<String, Object> params);
+
+    int getGoodsSum(int orderId);
 }

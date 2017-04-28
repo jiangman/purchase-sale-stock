@@ -1,21 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ehu.mapper.TMerchantPurchaseOrdersDetailMapper">
-  <resultMap id="BaseResultMap" type="com.ehu.model.TMerchantPurchaseOrdersDetail">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <id column="purchase_order_detail_id" jdbcType="INTEGER" property="purchaseOrderDetailId"/>
-    <result column="purchase_order_id" jdbcType="INTEGER" property="purchaseOrderId"/>
-    <result column="goods_id" jdbcType="INTEGER" property="goodsId"/>
-    <result column="goods_name" jdbcType="VARCHAR" property="goodsName"/>
-    <result column="order_quantity" jdbcType="INTEGER" property="orderQuantity"/>
-    <result column="actual_quantity" jdbcType="INTEGER" property="actualQuantity"/>
-    <result column="order_price" jdbcType="DECIMAL" property="orderPrice"/>
-    <result column="actual_price" jdbcType="DECIMAL" property="actualPrice"/>
-    <result column="remark" jdbcType="VARCHAR" property="remark"/>
-    <result column="order_detail_status" jdbcType="INTEGER" property="orderDetailStatus"/>
-    <result column="standard" jdbcType="VARCHAR" property="standard"/>
-    <result column="del_flag" jdbcType="INTEGER" property="delFlag"/>
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.ehu.model.TMerchantPurchaseOrdersDetail">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="purchase_order_detail_id" jdbcType="INTEGER" property="purchaseOrderDetailId"/>
+        <result column="purchase_order_id" jdbcType="INTEGER" property="purchaseOrderId"/>
+        <result column="goods_id" jdbcType="INTEGER" property="goodsId"/>
+        <result column="goods_name" jdbcType="VARCHAR" property="goodsName"/>
+        <result column="order_quantity" jdbcType="INTEGER" property="orderQuantity"/>
+        <result column="actual_quantity" jdbcType="INTEGER" property="actualQuantity"/>
+        <result column="order_price" jdbcType="DECIMAL" property="orderPrice"/>
+        <result column="actual_price" jdbcType="DECIMAL" property="actualPrice"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="order_detail_status" jdbcType="INTEGER" property="orderDetailStatus"/>
+        <result column="standard" jdbcType="VARCHAR" property="standard"/>
+        <result column="del_flag" jdbcType="INTEGER" property="delFlag"/>
+    </resultMap>
+
+    <select id="getDetailFirstMenu" resultType="map" parameterType="int">
+        select DISTINCT t5.* from t_merchant_purchase_orders_detail t1
+        INNER JOIN t_supplier_goods t2 on t1.goods_id = t2.goods_id
+        INNER JOIN t_store_goods_info t3 on t2.sgiid = t3.sgiid
+        INNER JOIN t_store_goods_menu_second t4 on t3.sgmsid = t4.sgmsid
+        INNER JOIN t_store_goods_menu_first t5 on t4.sgmfid = t5.sgmfid
+        WHERE t1.purchase_order_id = #{orderId}
+    </select>
+
+    <select id="getDetailSecondMenu" resultType="map" parameterType="map">
+        select DISTINCT t4.* from t_merchant_purchase_orders_detail t1
+        INNER JOIN t_supplier_goods t2 on t1.goods_id = t2.goods_id
+        INNER JOIN t_store_goods_info t3 on t2.sgiid = t3.sgiid
+        INNER JOIN t_store_goods_menu_second t4 on t3.sgmsid = t4.sgmsid
+        INNER JOIN t_store_goods_menu_first t5 on t4.sgmfid = t5.sgmfid and t5.sgmfid = #{firstMenuId}
+        WHERE t1.purchase_order_id = #{orderId}
+    </select>
+
+    <select id="getOrderDetailGoods" parameterType="com.ehu.bean.request.MerchantOrderDetailRequest" resultType="map">
+        select t1.*, t3.sgi_icon from t_merchant_purchase_orders_detail t1
+        INNER JOIN t_supplier_goods t2 on t1.goods_id = t2.goods_id
+        INNER JOIN t_store_goods_info t3 on t2.sgiid = t3.sgiid
+        INNER JOIN t_store_goods_menu_second t4 on t3.sgmsid = t4.sgmsid
+        <if test="secondMenuId != 0">
+            and t4.sgmsid = #{secondMenuId}
+        </if>
+        INNER JOIN t_store_goods_menu_first t5 on t4.sgmfid = t5.sgmfid
+        <if test="firstMenuId != 0">
+            and t5.sgmfid = #{firstMenuId}
+        </if>
+        WHERE t1.purchase_order_id = #{orderId}
+    </select>
 </mapper>

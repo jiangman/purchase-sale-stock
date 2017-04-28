@@ -5,7 +5,10 @@ import com.ehu.model.TPurchaseOrder;
 import com.ehu.util.MyMapper;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TPurchaseOrderMapper extends MyMapper<TPurchaseOrder> {
-    List<TPurchaseOrder> queryOrders(PurchaseOrderQueryRequest request);
+    List<Map<String, Object>> queryOrders(PurchaseOrderQueryRequest request);
+
+    int getGoodsSum(int orderId);
 }

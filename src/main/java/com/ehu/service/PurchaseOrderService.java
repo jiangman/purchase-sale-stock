@@ -1,9 +1,6 @@
 package com.ehu.service;
 
-import com.ehu.bean.request.MergeOrderRequest;
-import com.ehu.bean.request.PurchaseOrderDetailRequest;
-import com.ehu.bean.request.PurchaseOrderQueryRequest;
-import com.ehu.bean.request.PurchaseOrderRequest;
+import com.ehu.bean.request.*;
 import com.ehu.mapper.TMerchantPurchaseOrderMapper;
 import com.ehu.mapper.TMerchantPurchaseOrdersDetailMapper;
 import com.ehu.mapper.TPurchaseOrderMapper;
@@ -11,6 +8,7 @@ import com.ehu.mapper.TPurchaseOrdersDetailMapper;
 import com.ehu.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Maps;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -115,7 +114,18 @@ public class PurchaseOrderService {
      * @return
      */
     public Object findOrders(PurchaseOrderQueryRequest request) {
-        return orderMapper.queryOrders(request);
+        List<Map<String, Object>> result = orderMapper.queryOrders(request);
+        for (Map<String, Object> map : result) {
+            int orderId = (Integer) map.get("purchase_order_id");
+            TMerchantPurchaseOrdersDetailExample detailExample = new TMerchantPurchaseOrdersDetailExample();
+            detailExample.createCriteria().andPurchaseOrderIdEqualTo(orderId).andDelFlagEqualTo(0);
+            detailExample.setOrderByClause("order_price desc");
+            List<TPurchaseOrdersDetail> details = detailMapper.selectByExampleAndRowBounds(detailExample, new RowBounds(0, 3));
+            int goodsSum = orderMapper.getGoodsSum(orderId);
+            map.put("details", details);
+            map.put("goodsSum", goodsSum);
+        }
+        return result;
     }
 
     /**
@@ -154,5 +164,37 @@ public class PurchaseOrderService {
             detailMapper.updateByPrimaryKey(ordersDetail);
         }
         return purchaseOrder;
+    }
+
+    /**
+     * 详情中的商品一级菜单
+     *
+     * @param orderId
+     * @return
+     */
+    public Object getDetailFirstMenu(int orderId) {
+        return detailMapper.getDetailFirstMenu(orderId);
+    }
+
+    /**
+     * 详情中的商品二级菜单
+     *
+     * @return
+     */
+    public Object getDetailSecondMenu(int orderId, int firstMenuId) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("orderId", orderId);
+        params.put("firstMenuId", firstMenuId);
+        return detailMapper.getDetailSecondMenu(params);
+    }
+
+    /**
+     * 查询详情商品
+     *
+     * @param request
+     * @return
+     */
+    public Object getOrderDetailGoods(MerchantOrderDetailRequest request) {
+        return detailMapper.getOrderDetailGoods(request);
     }
 }
