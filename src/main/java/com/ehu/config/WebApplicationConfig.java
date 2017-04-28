@@ -1,5 +1,6 @@
 package com.ehu.config;
 
+import com.ehu.constants.SystemConstants;
 import com.ehu.interceptor.PermissionInterceptor;
 import com.ehu.interceptor.RequestInterceptor;
 import com.ehu.interceptor.TokenInterceptor;
@@ -29,9 +30,11 @@ public class WebApplicationConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        String[] unInterceptUrls = new String[SystemConstants.UN_INTERCPT_URLS.size()];
+        unInterceptUrls = SystemConstants.UN_INTERCPT_URLS.toArray(unInterceptUrls);
         registry.addInterceptor(new RequestInterceptor()).addPathPatterns("/*");
-        registry.addInterceptor(new TokenInterceptor(redisTemplate)).excludePathPatterns("/v2/*", "/user/login", "/swagger-ui.html", "/configuration/ui", "/swagger-resources", "/configuration/security");
-        registry.addInterceptor(new PermissionInterceptor()).excludePathPatterns("/v2/*", "/user/login", "/swagger-ui.html", "/configuration/ui", "/swagger-resources", "/configuration/security");
+        registry.addInterceptor(new TokenInterceptor(redisTemplate)).excludePathPatterns(unInterceptUrls);
+        registry.addInterceptor(new PermissionInterceptor()).excludePathPatterns(unInterceptUrls);
     }
 
     @Bean

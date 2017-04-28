@@ -1,6 +1,9 @@
 package com.ehu.constants;
 
 import com.ehu.bean.UserToken;
+import com.google.common.collect.Lists;
+
+import java.util.List;
 
 /**
  * 系统全局参数常量类.
@@ -10,7 +13,9 @@ import com.ehu.bean.UserToken;
  */
 public class SystemConstants {
     /** swagger url */
-    public static final String[] DO_NOT_INTERCEPT_URLS = {"/configuration/ui", "/swagger-resources", "/v2/api-docs", "/configuration/security"};
+    public static final String[] SWAGGER_URLS = {"/configuration/ui", "/swagger-resources", "/v2/api-docs", "/configuration/security"};
+
+    public static final List<String> UN_INTERCPT_URLS = Lists.newArrayList("/v2/*", "/user/login", "/swagger-ui.html", "/configuration/ui", "/swagger-resources", "/configuration/security");
 
     public static UserToken USER_TOKEN = new UserToken();
 }

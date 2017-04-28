@@ -146,7 +146,7 @@ public class ApiExceptionHandler implements ResponseBodyAdvice<Object> {
 
     @Override
     public Object beforeBodyWrite(Object o, MethodParameter methodParameter, MediaType mediaType, Class<? extends HttpMessageConverter<?>> aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
-        if (!StringUtils.contains(serverHttpRequest.getURI().getPath(), SystemConstants.DO_NOT_INTERCEPT_URLS)) {
+        if (!StringUtils.contains(serverHttpRequest.getURI().getPath(), SystemConstants.SWAGGER_URLS)) {
             if (o instanceof Response) {
                 return o;
             } else {
