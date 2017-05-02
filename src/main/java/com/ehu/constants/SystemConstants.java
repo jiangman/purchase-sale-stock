@@ -15,7 +15,9 @@ public class SystemConstants {
     /** swagger url */
     public static final String[] SWAGGER_URLS = {"/configuration/ui", "/swagger-resources", "/v2/api-docs", "/configuration/security"};
 
-    public static final List<String> UN_INTERCPT_URLS = Lists.newArrayList("/v2/*", "/user/login", "/swagger-ui.html", "/configuration/ui", "/swagger-resources", "/configuration/security");
+    public static final List<String> UN_INTERCPT_URLS = Lists.newArrayList("/v2/*", "/user/login", "/swagger-ui.html",
+            "/configuration/ui", "/swagger-resources", "/configuration/security",
+            "/druid/*");
 
     public static UserToken USER_TOKEN = new UserToken();
 }

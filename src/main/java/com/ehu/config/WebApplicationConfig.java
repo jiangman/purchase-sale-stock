@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -24,6 +25,7 @@ import java.text.SimpleDateFormat;
  * @since 2017-03-02 17:22.
  */
 @Configuration
+@Import(RedisDataSource.class)
 public class WebApplicationConfig extends WebMvcConfigurerAdapter {
     @Autowired
     private RedisTemplate redisTemplate;

@@ -18,4 +18,5 @@ public class DruidProperties {
     private int minIdle;
     private int initialSize;
     private boolean testOnBorrow;
+    private String filters;
 }
