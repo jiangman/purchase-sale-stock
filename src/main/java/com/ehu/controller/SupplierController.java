@@ -59,9 +59,10 @@ public class SupplierController {
     @GetMapping("/{supplierId}")
     @ApiOperation("供应商详情")
     @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "supplierId", value = "供应商Id", dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "string", paramType = "header")
     })
-    public Object findDetail(@PathVariable(value = "supplierId") int supplierId) {
-        return supplierService.findDetail(supplierId);
+    public Object findDetail(@ApiIgnore SupplierRequest request) {
+        return supplierService.findDetail(request.getSupplierId());
     }
 }
