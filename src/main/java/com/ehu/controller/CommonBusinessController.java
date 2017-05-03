@@ -62,6 +62,7 @@ public class CommonBusinessController {
     @GetMapping("/merchants")
     @ApiOperation("查询商家门店")
     @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "merchantId", value = "商家id", dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "searchText", value = "商家名称", dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "string", paramType = "header")
     })

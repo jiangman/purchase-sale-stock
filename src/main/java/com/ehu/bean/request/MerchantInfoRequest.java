@@ -10,5 +10,7 @@ import lombok.Data;
  */
 @Data
 public class MerchantInfoRequest {
-    private String searchText;
+    private String searchText = "";
+
+    private int merchantId;
 }

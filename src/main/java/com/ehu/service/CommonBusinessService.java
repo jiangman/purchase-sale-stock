@@ -81,7 +81,11 @@ public class CommonBusinessService {
      */
     public Object queryMerchant(MerchantInfoRequest request) {
         TStoreMerchantInfoExample example = new TStoreMerchantInfoExample();
-        example.createCriteria().andSmiNameLike("%" + request.getSearchText() + "%");
+        TStoreMerchantInfoExample.Criteria criteria = example.createCriteria();
+        criteria.andSmiNameLike("%" + request.getSearchText() + "%");
+        if (request.getMerchantId() != 0) {
+            criteria.andSmiidEqualTo(request.getMerchantId());
+        }
         return merchantInfoMapper.selectByExampleAndRowBounds(example, new RowBounds(0, 10));
     }
 }
