@@ -56,7 +56,7 @@ public class SupplierController {
         return supplierService.updateSupplier(request);
     }
 
-    @GetMapping("/{supplierId}")
+    @GetMapping("/detail")
     @ApiOperation("供应商详情")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "supplierId", value = "供应商Id", dataType = "int", paramType = "query"),
