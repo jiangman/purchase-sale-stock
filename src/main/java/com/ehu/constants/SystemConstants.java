@@ -18,6 +18,9 @@ public class SystemConstants {
     public static final List<String> UN_INTERCPT_URLS = Lists.newArrayList("/v2/*", "/user/login", "/swagger-ui.html",
             "/configuration/ui", "/swagger-resources", "/configuration/security",
             "/druid/*");
-
+    /**
+     * 登录token缓存key(商家端登录token头部)
+     */
+    public static final String TOKEN_KEY = "MCT_101_";
     public static UserToken USER_TOKEN = new UserToken();
 }

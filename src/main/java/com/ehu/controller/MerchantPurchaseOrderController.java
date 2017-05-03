@@ -1,6 +1,7 @@
 package com.ehu.controller;
 
 import com.ehu.bean.request.MerchantOrderDetailRequest;
+import com.ehu.bean.request.MerchantOrderQueryRequest;
 import com.ehu.bean.request.PurchaseOrderQueryRequest;
 import com.ehu.bean.request.PurchaseOrderRequest;
 import com.ehu.constants.SystemConstants;
@@ -54,13 +55,14 @@ public class MerchantPurchaseOrderController {
         return purchaseOrderService.getOrders(request);
     }
 
-    @GetMapping("/{orderId}")
+    @GetMapping("/detail")
     @ApiOperation("采购订单详情")
     @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "orderId", value = "订单id", dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "string", paramType = "header")
     })
-    public Object findDetail(@PathVariable(value = "orderId") int orderId) {
-        return purchaseOrderService.findDetail(orderId);
+    public Object findDetail(@ApiIgnore MerchantOrderQueryRequest request) {
+        return purchaseOrderService.findDetail(request.getOrderId());
     }
 
     @PutMapping
@@ -72,22 +74,25 @@ public class MerchantPurchaseOrderController {
         return purchaseOrderService.updateOrders(request);
     }
 
-    @GetMapping("/{orderId}/detail/first_menu")
+    @GetMapping("/detail/first_menu")
     @ApiOperation("采购订单详情商品一级菜单")
     @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "orderId", value = "订单id", dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "string", paramType = "header")
     })
-    public Object getDetailFirstMenu(@PathVariable(value = "orderId") int orderId) {
-        return purchaseOrderService.getDetailFirstMenu(orderId);
+    public Object getDetailFirstMenu(@ApiIgnore MerchantOrderQueryRequest request) {
+        return purchaseOrderService.getDetailFirstMenu(request.getOrderId());
     }
 
-    @GetMapping("/{orderId}/detail/{firstMenuId}")
+    @GetMapping("/detail/second_menu")
     @ApiOperation("采购订单详情商品二级菜单")
     @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "orderId", value = "订单id", dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "firstMenuId", value = "一级菜单id", dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "string", paramType = "header")
     })
-    public Object getDetailSecondMenu(@PathVariable(value = "orderId") int orderId, @PathVariable(value = "firstMenuId") int firstMenuId) {
-        return purchaseOrderService.getDetailSecondMenu(orderId, firstMenuId);
+    public Object getDetailSecondMenu(@ApiIgnore MerchantOrderQueryRequest request) {
+        return purchaseOrderService.getDetailSecondMenu(request.getOrderId(), request.getFirstMenuId());
     }
 
     @GetMapping("/detail/goods")

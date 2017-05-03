@@ -47,7 +47,7 @@ public class MerchantPurchaseOrderService {
         Date now = new Date();
         merchantPurchaseOrder.setCreateTime(now);
         merchantPurchaseOrder.setUpdateTime(now);
-        merchantPurchaseOrder.setMerchantId(SystemConstants.USER_TOKEN.getMerchantId());
+        merchantPurchaseOrder.setMerchantId(request.getMerchantId());
         int resultCount = orderMapper.insertSelective(merchantPurchaseOrder);
         if (resultCount == 1) {
             int orderId = merchantPurchaseOrder.getPurchaseOrderId();

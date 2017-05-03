@@ -9,7 +9,6 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
@@ -50,13 +49,14 @@ public class CommonBusinessController {
         return businessService.getFirstMenus();
     }
 
-    @GetMapping("/{firstMenuId}/second_menus")
+    @GetMapping("/second_menus")
     @ApiOperation("查询商品库二级菜单")
     @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "firstMenuId", value = "一级菜单id", dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "string", paramType = "header")
     })
-    public Object getSecondMenus(@PathVariable(value = "firstMenuId") int firstMenuId) {
-        return businessService.getSecondMenus(firstMenuId);
+    public Object getSecondMenus(@ApiIgnore GoodsInfoRequest request) {
+        return businessService.getSecondMenus(request.getFirstMenuId());
     }
 
     @GetMapping("/merchants")
