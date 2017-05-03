@@ -89,4 +89,22 @@
             AND t1.supplier_id = #{supplierId}
         </if>
     </select>
+
+    <select id="getSupplierMenus" parameterType="com.ehu.bean.request.SupplierMenuRequest"
+            resultType="com.ehu.model.GoodsMenu">
+        SELECT DISTINCT
+        t4.sgmfid firstMenuId,
+        t4.sgmf_name firstMenuName,
+        t3.sgmsid secondMenuId,
+        t3.sgms_name secondMenuName
+        FROM
+        t_supplier_goods t1
+        INNER JOIN t_store_goods_info t2 ON t1.sgiid = t2.sgiid
+        INNER JOIN t_store_goods_menu_second t3 ON t2.sgmsid = t3.sgmsid
+        INNER JOIN t_store_goods_menu_first t4 ON t3.sgmfid = t4.sgmfid
+        WHERE 1 = 1
+        <if test="supplierId != 0">
+            AND t1.supplier_id = #{supplierId}
+        </if>
+    </select>
 </mapper>

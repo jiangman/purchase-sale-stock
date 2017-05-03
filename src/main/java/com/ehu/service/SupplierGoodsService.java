@@ -4,9 +4,12 @@ import com.ehu.bean.request.SupplierGoodsRequest;
 import com.ehu.bean.request.SupplierGoodsSaveDetailRequest;
 import com.ehu.bean.request.SupplierGoodsSaveRequest;
 import com.ehu.bean.request.SupplierMenuRequest;
+import com.ehu.bean.response.GoodsMenuResponse;
 import com.ehu.bean.response.PageResponse;
 import com.ehu.mapper.TSupplierGoodsMapper;
+import com.ehu.model.GoodsMenu;
 import com.ehu.model.TSupplierGoods;
+import com.ehu.util.BeanUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -83,5 +86,23 @@ public class SupplierGoodsService {
      */
     public Object getSupplierSecondMenus(SupplierMenuRequest request) {
         return supplierGoodsMapper.getSupplierSecondMenus(request);
+    }
+
+    /**
+     * 获取供应商商品菜单(所有的菜单)
+     *
+     * @param request
+     * @return
+     * @throws IllegalAccessException
+     * @throws NoSuchFieldException
+     * @throws InstantiationException
+     */
+    public Object getSupplierMenus(SupplierMenuRequest request) throws IllegalAccessException, NoSuchFieldException, InstantiationException {
+        List<GoodsMenu> metaList = supplierGoodsMapper.getSupplierMenus(request);
+        List<GoodsMenuResponse> responses = BeanUtil.retriveCommonAttrsList(metaList, GoodsMenuResponse.class,
+                new String[]{"secondMenuId", "secondMenuName"},
+                "firstMenuId",
+                "seconds");
+        return responses;
     }
 }
