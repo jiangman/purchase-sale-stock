@@ -13,4 +13,6 @@ public class MerchantInfoRequest {
     private String searchText = "";
 
     private int merchantId;
+
+    private int guid;
 }

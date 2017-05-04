@@ -73,7 +73,7 @@ public class CommonBusinessController {
     @GetMapping("/merchants/detail")
     @ApiOperation("查询店铺信息")
     @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "merchantId", value = "商家id", dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "guid", value = "登陆人id", dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "string", paramType = "header")
     })
     public Object queryMerchantDetail(@ApiIgnore MerchantInfoRequest request) {
