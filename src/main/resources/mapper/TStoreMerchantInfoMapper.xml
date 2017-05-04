@@ -44,7 +44,7 @@
 
   <select id="queryMerchantDetail" parameterType="com.ehu.bean.request.MerchantInfoRequest" resultType="map">
     SELECT
-      t1.smi_name smiName, t1.smi_address smiAddress, t1.smi_phone smiPhone, t3.real_name realName
+      t1.smiid merchantId, t1.smi_name smiName, t1.smi_address smiAddress, t1.smi_phone smiPhone, t3.real_name realName
     FROM t_store_merchant_info t1
     INNER JOIN t_merchant_user_info t2 ON t1.smiid = t2.smiid
     INNER JOIN t_merchant_user t3 ON t2.muid = t3.guid
