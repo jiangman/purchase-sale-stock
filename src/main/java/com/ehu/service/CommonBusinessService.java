@@ -88,4 +88,14 @@ public class CommonBusinessService {
         }
         return merchantInfoMapper.selectByExampleAndRowBounds(example, new RowBounds(0, 10));
     }
+
+    /**
+     * 查询店铺信息
+     *
+     * @param request
+     * @return
+     */
+    public Object queryMerchantDetail(MerchantInfoRequest request) {
+        return merchantInfoMapper.queryMerchantDetail(request);
+    }
 }

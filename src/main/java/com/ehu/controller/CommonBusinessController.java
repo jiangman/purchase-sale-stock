@@ -69,4 +69,14 @@ public class CommonBusinessController {
     public Object queryMerchants(@ApiIgnore MerchantInfoRequest request) {
         return businessService.queryMerchant(request);
     }
+
+    @GetMapping("/merchants/detail")
+    @ApiOperation("查询店铺信息")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "merchantId", value = "商家id", dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
+    public Object queryMerchantDetail(@ApiIgnore MerchantInfoRequest request) {
+        return businessService.queryMerchantDetail(request);
+    }
 }
