@@ -51,4 +51,25 @@
         </if>
         WHERE t1.purchase_order_id = #{orderId}
     </select>
+
+    <select id="getOrderDetail" parameterType="int" resultType="map">
+        select
+            t1.purchase_order_detail_id purchaseOrderDetailId,
+            t1.purchase_order_id purchaseOrderId,
+            t1.goods_id goodsId,
+            t1.goods_name goodsName,
+            t1.order_quantity orderQuantity,
+            t1.actual_quantity actualQuantity,
+            t1.order_price actualPrice,
+            t1.remark,
+            t1.order_detail_status orderDetailStatus,
+            t2.standard standard,
+            t2.standard_value standardValue,
+            t1.del_flag delFlag,
+            t3.sgi_icon sgiIcon
+        from t_merchant_purchase_orders_detail t1
+        INNER JOIN t_supplier_goods t2 on t1.goods_id = t2.goods_id
+        INNER JOIN t_store_goods_info t3 on t2.sgiid = t3.sgiid
+        WHERE t1.purchase_order_id = #{orderId}
+    </select>
 </mapper>

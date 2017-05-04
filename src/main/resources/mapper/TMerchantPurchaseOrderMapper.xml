@@ -21,7 +21,22 @@
   </resultMap>
 
   <select id="queryOrders" parameterType="com.ehu.bean.request.PurchaseOrderQueryRequest" resultType="map">
-    select DISTINCT t1.*, t4.real_name, t5.smi_name, t5.smi_phone, t5.smi_address
+    select DISTINCT
+    t1.purchase_order_id purchaseOrderId,
+    t1.merged_id mergedId,
+    t1.merchant_id merchantId,
+    t1.person_in_charge personInCharge,
+    t1.order_total_price orderTotalPrice,
+    t1.order_actual_price orderActualPrice,
+    t1.verify_status verifyStatus,
+    t1.remark,
+    t1.del_flag delFlag,
+    t1.order_status orderStatus,
+    t1.create_time createTime,
+    t1.update_time updateTime,
+    t1.create_by createBy,
+    t1.update_by updateBy,
+    t4.real_name realName, t5.smi_name smiName, t5.smi_phone smiPhone, t5.smi_address smiAddress
     from t_merchant_purchase_order t1
     <if test="goodsName != null">
       INNER JOIN t_merchant_purchase_orders_detail t2 on t1.purchase_order_id = t2.purchase_order_id

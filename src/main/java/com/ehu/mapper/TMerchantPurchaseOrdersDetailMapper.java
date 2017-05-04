@@ -13,4 +13,6 @@ public interface TMerchantPurchaseOrdersDetailMapper extends MyMapper<TMerchantP
     List<Map<String, Object>> getDetailSecondMenu(Map<String, Object> params);
 
     List<Map<String, Object>> getOrderDetailGoods(MerchantOrderDetailRequest request);
+
+    List<Map<String, Object>> getOrderDetail(int orderId);
 }

@@ -9,9 +9,7 @@ import com.ehu.mapper.TMerchantPurchaseOrderMapper;
 import com.ehu.mapper.TMerchantPurchaseOrdersDetailMapper;
 import com.ehu.model.TMerchantPurchaseOrder;
 import com.ehu.model.TMerchantPurchaseOrdersDetail;
-import com.ehu.model.TMerchantPurchaseOrdersDetailExample;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -73,11 +71,11 @@ public class MerchantPurchaseOrderService {
     public Object getOrders(PurchaseOrderQueryRequest request) {
         List<Map<String, Object>> result = orderMapper.queryOrders(request);
         for (Map<String, Object> map : result) {
-            int orderId = (Integer) map.get("purchase_order_id");
-            TMerchantPurchaseOrdersDetailExample detailExample = new TMerchantPurchaseOrdersDetailExample();
-            detailExample.createCriteria().andPurchaseOrderIdEqualTo(orderId).andDelFlagEqualTo(0);
-            detailExample.setOrderByClause("order_price desc");
-            List<TMerchantPurchaseOrdersDetail> details = ordersDetailMapper.selectByExampleAndRowBounds(detailExample, new RowBounds(0, 3));
+            int orderId = (Integer) map.get("purchaseOrderId");
+//            TMerchantPurchaseOrdersDetailExample detailExample = new TMerchantPurchaseOrdersDetailExample();
+//            detailExample.createCriteria().andPurchaseOrderIdEqualTo(orderId).andDelFlagEqualTo(0);
+//            detailExample.setOrderByClause("order_price desc");
+            List<Map<String, Object>> details = ordersDetailMapper.getOrderDetail(orderId);
             int goodsSum = orderMapper.getGoodsSum(orderId);
             map.put("details", details);
             map.put("goodsSum", goodsSum);
@@ -93,9 +91,9 @@ public class MerchantPurchaseOrderService {
      */
     public Object findDetail(int orderId) {
         TMerchantPurchaseOrder merchantPurchaseOrder = orderMapper.selectByPrimaryKey(orderId);
-        TMerchantPurchaseOrdersDetailExample example = new TMerchantPurchaseOrdersDetailExample();
-        example.createCriteria().andDelFlagEqualTo(0).andPurchaseOrderIdEqualTo(orderId);
-        List<TMerchantPurchaseOrdersDetail> details = ordersDetailMapper.selectByExample(example);
+//        TMerchantPurchaseOrdersDetailExample example = new TMerchantPurchaseOrdersDetailExample();
+//        example.createCriteria().andDelFlagEqualTo(0).andPurchaseOrderIdEqualTo(orderId);
+        List<Map<String, Object>> details = ordersDetailMapper.getOrderDetail(orderId);
         Map<String, Object> result = new ObjectMapper().convertValue(merchantPurchaseOrder, Map.class);
         result.put("details", details);
         return result;
