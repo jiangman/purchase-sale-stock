@@ -5,7 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
 
-@Table(name = "t_store_goods_menu_first")
+@Table(name = "ehu.t_store_goods_menu_first")
 public class TStoreGoodsMenuFirst {
     /**
      * 商品菜单一级分类id

@@ -5,7 +5,6 @@ import com.ehu.bean.request.MergeOrderRequest;
 import com.ehu.bean.request.PurchaseOrderQueryRequest;
 import com.ehu.bean.request.PurchaseOrderRequest;
 import com.ehu.service.PurchaseOrderService;
-import com.google.common.collect.Lists;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -130,7 +129,6 @@ public class PurchaseOrderController {
             @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "string", paramType = "header")
     })
     public void downloadExcel(@ApiIgnore MergeOrderRequest request, HttpServletResponse response) throws IOException {
-        request.setOrderIds(Lists.newArrayList(10, 11, 12));
         ByteArrayOutputStream os = (ByteArrayOutputStream) purchaseOrderService.getExcelOrders(request);
         byte[] content = os.toByteArray();
         InputStream is = new ByteArrayInputStream(content);
@@ -139,8 +137,8 @@ public class PurchaseOrderController {
         response.setContentType("application/vnd.ms-excel;charset=utf-8");
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
         String nowString = format.format(new Date());
-        String fileName = "采购单" + nowString;
-        response.setHeader("Content-Disposition", "attachment;filename=" + new String((fileName + ".xls").getBytes(), "utf-8"));
+        String fileName = "采购单-" + nowString;
+        response.setHeader("Content-Disposition", "attachment;filename=" + new String((fileName + ".xls").getBytes(), "iso-8859-1"));
 
         ServletOutputStream out = response.getOutputStream();
         BufferedInputStream bis = null;

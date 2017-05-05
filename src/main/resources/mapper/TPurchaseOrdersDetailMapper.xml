@@ -34,9 +34,9 @@
     t5.is_redpaper_usable isRedpaperUsable
     from t_purchase_orders_detail t1
     INNER JOIN t_supplier_goods t2 on t1.goods_id = t2.goods_id
-    INNER JOIN t_store_goods_info t3 on t2.sgiid = t3.sgiid
-    INNER JOIN t_store_goods_menu_second t4 on t3.sgmsid = t4.sgmsid
-    INNER JOIN t_store_goods_menu_first t5 on t4.sgmfid = t5.sgmfid
+    INNER JOIN ehu.t_store_goods_info t3 on t2.sgiid = t3.sgiid
+    INNER JOIN ehu.t_store_goods_menu_second t4 on t3.sgmsid = t4.sgmsid
+    INNER JOIN ehu.t_store_goods_menu_first t5 on t4.sgmfid = t5.sgmfid
     WHERE t1.purchase_order_id = #{orderId}
   </select>
 
@@ -52,9 +52,9 @@
     t4.valid_flag validFlag
     from t_purchase_orders_detail t1
     INNER JOIN t_supplier_goods t2 on t1.goods_id = t2.goods_id
-    INNER JOIN t_store_goods_info t3 on t2.sgiid = t3.sgiid
-    INNER JOIN t_store_goods_menu_second t4 on t3.sgmsid = t4.sgmsid
-    INNER JOIN t_store_goods_menu_first t5 on t4.sgmfid = t5.sgmfid and t5.sgmfid = #{firstMenuId}
+    INNER JOIN ehu.t_store_goods_info t3 on t2.sgiid = t3.sgiid
+    INNER JOIN ehu.t_store_goods_menu_second t4 on t3.sgmsid = t4.sgmsid
+    INNER JOIN ehu.t_store_goods_menu_first t5 on t4.sgmfid = t5.sgmfid and t5.sgmfid = #{firstMenuId}
     WHERE t1.purchase_order_id = #{orderId}
   </select>
 
@@ -73,12 +73,12 @@
     t3.sgi_icon sgiIcon
     from t_purchase_orders_detail t1
     INNER JOIN t_supplier_goods t2 on t1.goods_id = t2.goods_id
-    INNER JOIN t_store_goods_info t3 on t2.sgiid = t3.sgiid
-    INNER JOIN t_store_goods_menu_second t4 on t3.sgmsid = t4.sgmsid
+    INNER JOIN ehu.t_store_goods_info t3 on t2.sgiid = t3.sgiid
+    INNER JOIN ehu.t_store_goods_menu_second t4 on t3.sgmsid = t4.sgmsid
     <if test="secondMenuId != 0">
       and t4.sgmsid = #{secondMenuId}
     </if>
-    INNER JOIN t_store_goods_menu_first t5 on t4.sgmfid = t5.sgmfid
+    INNER JOIN ehu.t_store_goods_menu_first t5 on t4.sgmfid = t5.sgmfid
     <if test="firstMenuId != 0">
       and t5.sgmfid = #{firstMenuId}
     </if>

@@ -130,7 +130,7 @@ public class PurchaseOrderService {
     public Object findOrders(PurchaseOrderQueryRequest request) {
         List<Map<String, Object>> result = orderMapper.queryOrders(request);
         for (Map<String, Object> map : result) {
-            int orderId = (Integer) map.get("purchase_order_id");
+            int orderId = (Integer) map.get("purchaseOrderId");
             TMerchantPurchaseOrdersDetailExample detailExample = new TMerchantPurchaseOrdersDetailExample();
             detailExample.createCriteria().andPurchaseOrderIdEqualTo(orderId).andDelFlagEqualTo(0);
             detailExample.setOrderByClause("order_price desc");

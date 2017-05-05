@@ -5,7 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
 
-@Table(name = "t_merchant_user")
+@Table(name = "ehu.t_merchant_user")
 public class TMerchantUser {
     /**
      * 商家端用户id

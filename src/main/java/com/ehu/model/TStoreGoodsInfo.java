@@ -5,7 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
 
-@Table(name = "t_store_goods_info")
+@Table(name = "ehu.t_store_goods_info")
 public class TStoreGoodsInfo {
     /**
      * 商品信息id

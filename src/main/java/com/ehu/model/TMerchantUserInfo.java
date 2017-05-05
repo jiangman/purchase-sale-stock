@@ -5,7 +5,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "t_merchant_user_info")
+@Table(name = "ehu.t_merchant_user_info")
 public class TMerchantUserInfo {
     /**
      * id

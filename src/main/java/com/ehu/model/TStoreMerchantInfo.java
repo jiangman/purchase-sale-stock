@@ -1,10 +1,12 @@
 package com.ehu.model;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.util.Date;
-import javax.persistence.*;
 
-@Table(name = "t_store_merchant_info")
+@Table(name = "ehu.t_store_merchant_info")
 public class TStoreMerchantInfo {
     /**
      * 商家信息id
