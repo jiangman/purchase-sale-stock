@@ -40,7 +40,7 @@ public class TSupplierGoods {
     /**
      * 成本价
      */
-    @Column(name = "`cost price`")
+    @Column(name = "`cost_price`")
     private BigDecimal costPrice;
 
     /**
@@ -147,7 +147,7 @@ public class TSupplierGoods {
     /**
      * 获取成本价
      *
-     * @return cost price - 成本价
+     * @return cost_price - 成本价
      */
     public BigDecimal getCostPrice() {
         return costPrice;

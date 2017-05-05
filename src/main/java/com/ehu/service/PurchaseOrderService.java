@@ -1,11 +1,13 @@
 package com.ehu.service;
 
+import com.ehu.bean.business.SupplierGoodsBean;
 import com.ehu.bean.request.*;
 import com.ehu.mapper.TMerchantPurchaseOrderMapper;
 import com.ehu.mapper.TMerchantPurchaseOrdersDetailMapper;
 import com.ehu.mapper.TPurchaseOrderMapper;
 import com.ehu.mapper.TPurchaseOrdersDetailMapper;
 import com.ehu.model.*;
+import com.ehu.util.ExportExcel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Maps;
 import org.apache.ibatis.session.RowBounds;
@@ -14,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -105,6 +109,16 @@ public class PurchaseOrderService {
         params.put("mergedId", purchaseOrder.getPurchaseOrderId());
         merchantPurchaseOrderMapper.updateOrderStatus(params);
         return purchaseOrder;
+    }
+
+    public Object getExcelOrders(MergeOrderRequest request) throws IOException {
+        TPurchaseOrder purchaseOrder = (TPurchaseOrder) mergeOrders(request);
+        List<SupplierGoodsBean> data = detailMapper.getExcelOrders(purchaseOrder.getPurchaseOrderId());
+        ExportExcel<SupplierGoodsBean> ex = new ExportExcel<>();
+        String[] headers = {"供应商", "商品名称", "进货数量", "商品单价"};
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        ex.exportExcel(headers, data, out);
+        return out;
     }
 
     /**

@@ -5,6 +5,7 @@ import com.ehu.bean.request.MergeOrderRequest;
 import com.ehu.bean.request.PurchaseOrderQueryRequest;
 import com.ehu.bean.request.PurchaseOrderRequest;
 import com.ehu.service.PurchaseOrderService;
+import com.google.common.collect.Lists;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -13,7 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * write something to describe this file.
@@ -115,5 +121,46 @@ public class PurchaseOrderController {
     })
     public Object getOrderDetailGoods(@ApiIgnore MerchantOrderDetailRequest request) {
         return purchaseOrderService.getOrderDetailGoods(request);
+    }
+
+    @GetMapping("/downloadExcel")
+    @ApiOperation("下载合并的采购订单")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "orderIds", value = "待合并的订单id", required = true, dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
+    public void downloadExcel(@ApiIgnore MergeOrderRequest request, HttpServletResponse response) throws IOException {
+        request.setOrderIds(Lists.newArrayList(10, 11, 12));
+        ByteArrayOutputStream os = (ByteArrayOutputStream) purchaseOrderService.getExcelOrders(request);
+        byte[] content = os.toByteArray();
+        InputStream is = new ByteArrayInputStream(content);
+        // 设置response参数，可以打开下载页面
+        response.reset();
+        response.setContentType("application/vnd.ms-excel;charset=utf-8");
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+        String nowString = format.format(new Date());
+        String fileName = "采购单" + nowString;
+        response.setHeader("Content-Disposition", "attachment;filename=" + new String((fileName + ".xls").getBytes(), "utf-8"));
+
+        ServletOutputStream out = response.getOutputStream();
+        BufferedInputStream bis = null;
+        BufferedOutputStream bos = null;
+        try {
+            bis = new BufferedInputStream(is);
+            bos = new BufferedOutputStream(out);
+            byte[] buff = new byte[2048];
+            int bytesRead;
+            // Simple read/write loop.
+            while (-1 != (bytesRead = bis.read(buff, 0, buff.length))) {
+                bos.write(buff, 0, bytesRead);
+            }
+        } catch (final IOException e) {
+            throw e;
+        } finally {
+            if (bis != null)
+                bis.close();
+            if (bos != null)
+                bos.close();
+        }
     }
 }
