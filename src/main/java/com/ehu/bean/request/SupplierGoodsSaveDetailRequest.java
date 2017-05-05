@@ -28,7 +28,7 @@ public class SupplierGoodsSaveDetailRequest {
      * 规格数量
      */
     @ApiModelProperty("规格数量")
-    private Integer standardValue;
+    private BigDecimal standardValue;
 
     /**
      * 最小起订数量

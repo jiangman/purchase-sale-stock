@@ -305,52 +305,52 @@ public class TSupplierGoodsExample {
             return (Criteria) this;
         }
 
-        public Criteria andStandardValueEqualTo(Integer value) {
+        public Criteria andStandardValueEqualTo(BigDecimal value) {
             addCriterion("standard_value =", value, "standardValue");
             return (Criteria) this;
         }
 
-        public Criteria andStandardValueNotEqualTo(Integer value) {
+        public Criteria andStandardValueNotEqualTo(BigDecimal value) {
             addCriterion("standard_value <>", value, "standardValue");
             return (Criteria) this;
         }
 
-        public Criteria andStandardValueGreaterThan(Integer value) {
+        public Criteria andStandardValueGreaterThan(BigDecimal value) {
             addCriterion("standard_value >", value, "standardValue");
             return (Criteria) this;
         }
 
-        public Criteria andStandardValueGreaterThanOrEqualTo(Integer value) {
+        public Criteria andStandardValueGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("standard_value >=", value, "standardValue");
             return (Criteria) this;
         }
 
-        public Criteria andStandardValueLessThan(Integer value) {
+        public Criteria andStandardValueLessThan(BigDecimal value) {
             addCriterion("standard_value <", value, "standardValue");
             return (Criteria) this;
         }
 
-        public Criteria andStandardValueLessThanOrEqualTo(Integer value) {
+        public Criteria andStandardValueLessThanOrEqualTo(BigDecimal value) {
             addCriterion("standard_value <=", value, "standardValue");
             return (Criteria) this;
         }
 
-        public Criteria andStandardValueIn(List<Integer> values) {
+        public Criteria andStandardValueIn(List<BigDecimal> values) {
             addCriterion("standard_value in", values, "standardValue");
             return (Criteria) this;
         }
 
-        public Criteria andStandardValueNotIn(List<Integer> values) {
+        public Criteria andStandardValueNotIn(List<BigDecimal> values) {
             addCriterion("standard_value not in", values, "standardValue");
             return (Criteria) this;
         }
 
-        public Criteria andStandardValueBetween(Integer value1, Integer value2) {
+        public Criteria andStandardValueBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("standard_value between", value1, value2, "standardValue");
             return (Criteria) this;
         }
 
-        public Criteria andStandardValueNotBetween(Integer value1, Integer value2) {
+        public Criteria andStandardValueNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("standard_value not between", value1, value2, "standardValue");
             return (Criteria) this;
         }

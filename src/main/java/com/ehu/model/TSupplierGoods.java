@@ -29,7 +29,7 @@ public class TSupplierGoods {
      * 规格数量
      */
     @Column(name = "standard_value")
-    private Integer standardValue;
+    private BigDecimal standardValue;
 
     /**
      * 最小起订数量
@@ -113,7 +113,7 @@ public class TSupplierGoods {
      *
      * @return standard_value - 规格数量
      */
-    public Integer getStandardValue() {
+    public BigDecimal getStandardValue() {
         return standardValue;
     }
 
@@ -122,7 +122,7 @@ public class TSupplierGoods {
      *
      * @param standardValue 规格数量
      */
-    public void setStandardValue(Integer standardValue) {
+    public void setStandardValue(BigDecimal standardValue) {
         this.standardValue = standardValue;
     }
 
