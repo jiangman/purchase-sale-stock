@@ -58,6 +58,7 @@
     <if test="personInCharge != null">
       and t1.person_in_charge like '%${personInCharge}%'
     </if>
+    ORDER BY t1.create_time desc
     limit #{offset}, #{pageSize}
   </select>
 
