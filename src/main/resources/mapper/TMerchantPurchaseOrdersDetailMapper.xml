@@ -20,7 +20,19 @@
     </resultMap>
 
     <select id="getDetailFirstMenu" resultType="map" parameterType="int">
-        select DISTINCT t5.* from t_merchant_purchase_orders_detail t1
+        select DISTINCT
+        t5.sgmfid,
+        t5.sgmf_name sgmfName,
+        t5.sgmf_sort sgmfSort,
+        t5.sgmf_type sgmfType,
+        t5.create_date createDate,
+        t5.create_by createBy,
+        t5.update_date updateDate,
+        t5.update_by updateBy,
+        t5.valid_flag validFlag,
+        t5.sgmf_icon sgmfIcon,
+        t5.is_redpaper_usable isRedpaperUsable
+        from t_merchant_purchase_orders_detail t1
         INNER JOIN t_supplier_goods t2 on t1.goods_id = t2.goods_id
         INNER JOIN t_store_goods_info t3 on t2.sgiid = t3.sgiid
         INNER JOIN t_store_goods_menu_second t4 on t3.sgmsid = t4.sgmsid
@@ -29,7 +41,16 @@
     </select>
 
     <select id="getDetailSecondMenu" resultType="map" parameterType="map">
-        select DISTINCT t4.* from t_merchant_purchase_orders_detail t1
+        select DISTINCT
+        t4.sgmsid,
+        t4.sgms_name sgmsName,
+        t4.sgms_sort sgmsSort,
+        t4.sgmfid sgmfid,
+        t4.create_date createDate,
+        t4.create_by createBy,
+        t4.update_by updateBy,
+        t4.valid_flag validFlag
+        from t_merchant_purchase_orders_detail t1
         INNER JOIN t_supplier_goods t2 on t1.goods_id = t2.goods_id
         INNER JOIN t_store_goods_info t3 on t2.sgiid = t3.sgiid
         INNER JOIN t_store_goods_menu_second t4 on t3.sgmsid = t4.sgmsid
@@ -38,7 +59,19 @@
     </select>
 
     <select id="getOrderDetailGoods" parameterType="com.ehu.bean.request.MerchantOrderDetailRequest" resultType="map">
-        select t1.*, t3.sgi_icon from t_merchant_purchase_orders_detail t1
+        select
+        t1.purchase_order_detail_id purchaseOrderDetailId,
+        t1.purchase_order_id purchaseOrderId,
+        t1.goods_id goodsId,
+        t1.goods_name goodsName,
+        t1.order_quantity orderQuantity,
+        t1.actual_quantity actualQuantity,
+        t1.order_price actualPrice,
+        t1.remark,
+        t1.order_detail_status orderDetailStatus,
+        t1.del_flag delFlag,
+        t3.sgi_icon sgiIcon
+        from t_merchant_purchase_orders_detail t1
         INNER JOIN t_supplier_goods t2 on t1.goods_id = t2.goods_id
         INNER JOIN t_store_goods_info t3 on t2.sgiid = t3.sgiid
         INNER JOIN t_store_goods_menu_second t4 on t3.sgmsid = t4.sgmsid
@@ -66,6 +99,7 @@
             t2.standard standard,
             t2.standard_value standardValue,
             t1.del_flag delFlag,
+        t1.order_price orderPrice,
             t3.sgi_icon sgiIcon
         from t_merchant_purchase_orders_detail t1
         INNER JOIN t_supplier_goods t2 on t1.goods_id = t2.goods_id

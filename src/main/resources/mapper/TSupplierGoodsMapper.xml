@@ -63,16 +63,37 @@
     </select>
 
     <select id="getGoodsDetail" parameterType="int" resultType="map">
-        select t1.*, t2.sgi_name, t2.sgi_img from t_supplier_goods t1
+        select
+        t1.goods_id goodsId,
+        t1.supplier_id supplierId,
+        t1.standard standard,
+        t1.standard_value standardValue,
+        t1.min_order_quantity minOrderQuantity,
+        t1.cost_price costPrice,
+        t1.sgiid sgiid,
+        t1.del_flag delFlag,
+        t2.sgi_name sgiName,
+        t2.sgi_img sgiImg
+        from t_supplier_goods t1
         INNER JOIN t_store_goods_info t2 on t1.sgiid = t2.sgiid
         WHERE t1.goods_id = #{goodsId}
     </select>
 
     <select id="getSupplierFirstMenus" parameterType="com.ehu.bean.request.SupplierMenuRequest" resultType="map">
-        SELECT
-          DISTINCT t4.*
+        SELECT DISTINCT
+        t4.sgmfid,
+        t4.sgmf_name sgmfName,
+        t4.sgmf_sort sgmfSort,
+        t4.sgmf_type sgmfType,
+        t4.create_date createDate,
+        t4.create_by createBy,
+        t4.update_date updateDate,
+        t4.update_by updateBy,
+        t4.valid_flag validFlag,
+        t4.sgmf_icon sgmfIcon,
+        t4.is_redpaper_usable isRedpaperUsable
         FROM
-          t_supplier_goods t1
+        t_supplier_goods t1
         INNER JOIN t_store_goods_info t2 ON t1.sgiid = t2.sgiid
         INNER JOIN t_store_goods_menu_second t3 on t2.sgmsid = t3.sgmsid
         INNER JOIN t_store_goods_menu_first t4 on t3.sgmfid = t4.sgmfid
@@ -84,7 +105,15 @@
 
     <select id="getSupplierSecondMenus" parameterType="com.ehu.bean.request.SupplierMenuRequest" resultType="map">
         SELECT
-          DISTINCT t3.*
+        DISTINCT
+        t3.sgmsid,
+        t3.sgms_name sgmsName,
+        t3.sgms_sort sgmsSort,
+        t3.sgmfid sgmfid,
+        t3.create_date createDate,
+        t3.create_by createBy,
+        t3.update_by updateBy,
+        t3.valid_flag validFlag
         FROM
           t_supplier_goods t1
         INNER JOIN t_store_goods_info t2 ON t1.sgiid = t2.sgiid

@@ -18,7 +18,18 @@
     </resultMap>
 
     <select id="queryOrders" parameterType="com.ehu.bean.request.PurchaseOrderQueryRequest" resultType="map">
-        select DISTINCT t1.* from t_purchase_order t1
+        select DISTINCT
+        t1.purchase_order_id purchaseOrderId,
+        t1.supplier_id supplierId,
+        t1.person_in_charge personInCharge,
+        t1.order_total orderTotal,
+        t1.order_actual orderActual,
+        t1.remark remark,
+        t1.order_status orderStatus,
+        t1.pay_status payStatus,
+        t1.verify_status verifyStatus,
+        t1.del_flag delFlag
+        from t_purchase_order t1
         <if test="goodsName != null">
             INNER JOIN t_purchase_orders_detail t2 on t1.purchase_order_id = t2.purchase_order_id
             and t2.goods_name like '%${goodsName}%' and t2.del_flag = 0

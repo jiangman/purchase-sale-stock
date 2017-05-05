@@ -22,7 +22,19 @@
 
     <select id="queryGoods" resultMap="BaseResultMap" parameterType="com.ehu.bean.request.GoodsInfoRequest">
         SELECT
-        t1.*
+        t1.sgiid sgiid,
+        t1.sgi_name sgiName,
+        t1.sgi_standard sgiStandard,
+        t1.sgi_brand sgiBrand,
+        t1.sgi_icon sgiIcon,
+        t1.sgi_img sgiImg,
+        t1.sgmsid sgmsid,
+        t1.create_date createDate,
+        t1.create_by createBy,
+        t1.update_date updateDate,
+        t1.update_by updateBy,
+        t1.bar_code barCode,
+        t1.valid_flag validFlag
         FROM
         ehu.t_store_goods_info t1
         INNER JOIN ehu.t_store_goods_menu_second t2 on t1.sgmsid = t2.sgmsid
