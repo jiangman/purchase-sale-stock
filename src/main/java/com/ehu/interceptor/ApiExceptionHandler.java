@@ -41,11 +41,11 @@ public class ApiExceptionHandler implements ResponseBodyAdvice<Object> {
      * @return
      */
     @ExceptionHandler(LoginValidationException.class)
-    @ResponseStatus(value = HttpStatus.FORBIDDEN)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
     public Response handleTokenValidationException(LoginValidationException ex) {
         ex.printStackTrace();
-        return new Response(HttpStatus.FORBIDDEN.value(), ex.getMessage(), null, new Date());
+        return new Response(HttpStatus.BAD_REQUEST.value(), ex.getMessage(), null, new Date());
     }
 
     /**
