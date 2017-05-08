@@ -41,7 +41,7 @@ public class ApiExceptionHandler implements ResponseBodyAdvice<Object> {
      * @return
      */
     @ExceptionHandler(LoginValidationException.class)
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public Response handleTokenValidationException(LoginValidationException ex) {
         ex.printStackTrace();
