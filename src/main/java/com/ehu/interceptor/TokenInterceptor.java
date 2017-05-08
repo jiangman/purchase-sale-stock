@@ -14,12 +14,10 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
 
 @Slf4j
 public class TokenInterceptor extends HandlerInterceptorAdapter {
-    private static String un_login;
+//    private static String un_login;
 
     private RedisTemplate redisTemplate;
 
@@ -61,8 +59,7 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
         } else {
             String loginToken = getValueFromJedis(SystemConstants.TOKEN_KEY + Integer.parseInt(guid));
             if (loginToken == null || !loginToken.equals(token)) {
-                unLogin(response);
-                return false;
+                throw new LoginValidationException(ErrorMessageConstants.ILLEGAL_TOKEN);
             } else {
                 return true;
             }
@@ -70,25 +67,26 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
         return true;
     }
 
-    /**
-     * 用户未登录
-     *
-     * @param response
-     * @throws IOException
-     */
-    private void unLogin(HttpServletResponse response) throws IOException {
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json; charset=utf-8");
-        PrintWriter out = null;
-        try {
-            out = response.getWriter();
-            out.append(un_login);
-        } finally {
-            if (out != null) {
-                out.close();
-            }
-        }
-    }
+//    /**
+//     * 用户未登录
+//     *
+//     * @param response
+//     * @throws IOException
+//     */
+//    private void unLogin(HttpServletResponse response) throws IOException {
+//        response.setCharacterEncoding("UTF-8");
+//        response.setContentType("application/json; charset=utf-8");
+//        PrintWriter out = null;
+//        try {
+//            out = response.getWriter();
+//            out.append(un_login);
+//            out.flush();
+//        } finally {
+//            if (out != null) {
+//                out.close();
+//            }
+//        }
+//    }
 
     /**
      * 获取key，用于兼容之前使用的jedis，由于之前在store的时候并没有使用序列化，
