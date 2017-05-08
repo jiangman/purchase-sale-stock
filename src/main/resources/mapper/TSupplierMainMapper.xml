@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ehu.mapper.TSupplierMainMapper">
+    <resultMap id="BaseResultMap" type="com.ehu.model.TSupplierMain">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="supplier_id" property="supplierId" jdbcType="INTEGER"/>
+        <result column="supplier_name" property="supplierName" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="tel" property="tel" jdbcType="VARCHAR"/>
+        <result column="postcode" property="postcode" jdbcType="VARCHAR"/>
+        <result column="contacter" property="contacter" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="payment_days" property="paymentDays" jdbcType="VARCHAR"/>
+        <result column="payment_type" property="paymentType" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="INTEGER"/>
+        <result column="is_default" property="isDefault" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        supplier_id, supplier_name, address, tel, postcode, contacter, email, payment_days,
+        payment_type, del_flag, is_default
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ehu.model.TSupplierMainExample">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from t_supplier_main
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <delete id="deleteByExample" parameterType="com.ehu.model.TSupplierMainExample">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        delete from t_supplier_main
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <select id="countByExample" parameterType="com.ehu.model.TSupplierMainExample" resultType="java.lang.Integer">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        select count(*) from t_supplier_main
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        update t_supplier_main
+        <set>
+            <if test="record.supplierId != null">
+                supplier_id = #{record.supplierId,jdbcType=INTEGER},
+            </if>
+            <if test="record.supplierName != null">
+                supplier_name = #{record.supplierName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.address != null">
+                address = #{record.address,jdbcType=VARCHAR},
+            </if>
+            <if test="record.tel != null">
+                tel = #{record.tel,jdbcType=VARCHAR},
+            </if>
+            <if test="record.postcode != null">
+                postcode = #{record.postcode,jdbcType=VARCHAR},
+            </if>
+            <if test="record.contacter != null">
+                contacter = #{record.contacter,jdbcType=VARCHAR},
+            </if>
+            <if test="record.email != null">
+                email = #{record.email,jdbcType=VARCHAR},
+            </if>
+            <if test="record.paymentDays != null">
+                payment_days = #{record.paymentDays,jdbcType=VARCHAR},
+            </if>
+            <if test="record.paymentType != null">
+                payment_type = #{record.paymentType,jdbcType=VARCHAR},
+            </if>
+            <if test="record.delFlag != null">
+                del_flag = #{record.delFlag,jdbcType=INTEGER},
+            </if>
+            <if test="record.isDefault != null">
+                is_default = #{record.isDefault,jdbcType=INTEGER},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        update t_supplier_main
+        set supplier_id = #{record.supplierId,jdbcType=INTEGER},
+        supplier_name = #{record.supplierName,jdbcType=VARCHAR},
+        address = #{record.address,jdbcType=VARCHAR},
+        tel = #{record.tel,jdbcType=VARCHAR},
+        postcode = #{record.postcode,jdbcType=VARCHAR},
+        contacter = #{record.contacter,jdbcType=VARCHAR},
+        email = #{record.email,jdbcType=VARCHAR},
+        payment_days = #{record.paymentDays,jdbcType=VARCHAR},
+        payment_type = #{record.paymentType,jdbcType=VARCHAR},
+        del_flag = #{record.delFlag,jdbcType=INTEGER},
+        is_default = #{record.isDefault,jdbcType=INTEGER}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+</mapper>

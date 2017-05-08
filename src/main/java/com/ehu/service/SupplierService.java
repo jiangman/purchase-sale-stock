@@ -5,9 +5,11 @@ import com.ehu.bean.request.SupplierRequest;
 import com.ehu.constants.BusinessConstants;
 import com.ehu.constants.ErrorMessageConstants;
 import com.ehu.exceptions.BusinessErrorException;
+import com.ehu.mapper.TSupplierMainMapper;
 import com.ehu.mapper.TSupplierMapper;
 import com.ehu.model.TSupplier;
 import com.ehu.model.TSupplierExample;
+import com.ehu.model.TSupplierMainExample;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +26,11 @@ public class SupplierService {
     @Autowired
     private TSupplierMapper supplierMapper;
 
+    @Autowired
+    private TSupplierMainMapper supplierMainMapper;
+
     /**
-     * 查询供应商列表
+     * 查询上游供应商列表
      *
      * @param request
      * @return
@@ -72,5 +77,17 @@ public class SupplierService {
         }
         BeanUtils.copyProperties(request, supplier);
         return supplierMapper.updateByPrimaryKey(supplier);
+    }
+
+    /**
+     * 查询供应商列表
+     *
+     * @param request
+     * @return
+     */
+    public Object queryMainSuppliers(SupplierQueryRequest request) {
+        TSupplierMainExample example = new TSupplierMainExample();
+        example.createCriteria().andSupplierNameLike("%" + request.getSupplierName() + "%").andDelFlagEqualTo(BusinessConstants.DEL_FLAG_UNDEL);
+        return supplierMainMapper.selectByExampleAndRowBounds(example, new RowBounds(request.getOffset(), request.getPageSize()));
     }
 }

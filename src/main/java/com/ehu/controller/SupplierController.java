@@ -65,4 +65,16 @@ public class SupplierController {
     public Object findDetail(@ApiIgnore SupplierRequest request) {
         return supplierService.findDetail(request.getSupplierId());
     }
+
+    @GetMapping("/main")
+    @ApiOperation("查询供应商列表(主)")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "supplierName", value = "供应商名称", dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "pageNo", value = "页码", dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "pageSize", value = "每页条数", dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
+    public Object getMainSuppliers(@ApiIgnore SupplierQueryRequest request) {
+        return supplierService.queryMainSuppliers(request);
+    }
 }

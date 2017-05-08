@@ -27,7 +27,7 @@
         <javaClientGenerator targetPackage="com.ehu.mapper" targetProject="src/main/java"
                              type="XMLMAPPER"/>
 
-        <table tableName="t_purchase_orders_detail">
+        <table tableName="t_supplier_main">
             <!--mysql 配置-->
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
             <!--oracle 配置-->
