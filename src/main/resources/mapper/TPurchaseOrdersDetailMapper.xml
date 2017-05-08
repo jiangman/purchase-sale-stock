@@ -93,4 +93,18 @@
     LEFT JOIN t_supplier t3 on t2.supplier_id = t3.supplier_id
     WHERE t1.purchase_order_id = #{orderId}
   </select>
+
+  <select id="getExcelMerchantOrders" parameterType="com.ehu.bean.request.MerchantOrderDetailRequest"
+          resultType="com.ehu.bean.business.MerchantOrderBean">
+    SELECT
+      t1.purchase_order_id purchaseOrderId,
+      t3.smi_name merchantName,
+      t1.goods_name goodsName,
+      t1.order_quantity orderQuantity,
+      t1.order_price orderPrice,
+      t2.create_time orderTime
+    FROM t_merchant_purchase_orders_detail t1
+    INNER JOIN t_merchant_purchase_order t2 on t1.purchase_order_id = t2.purchase_order_id
+    INNER JOIN ehu.t_store_merchant_info t3 on t2.merchant_id = t3.smiid
+  </select>
 </mapper>

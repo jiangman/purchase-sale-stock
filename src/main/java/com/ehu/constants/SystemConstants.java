@@ -17,7 +17,7 @@ public class SystemConstants {
 
     public static final List<String> UN_INTERCPT_URLS = Lists.newArrayList("/v2/*", "/user/login", "/swagger-ui.html",
             "/configuration/ui", "/swagger-resources", "/configuration/security",
-            "/druid/*", "/orders/downloadExcel");
+            "/druid/*", "/orders/downloadExcel", "/orders/downloadOrdersExcel");
     /**
      * 登录token缓存key(商家端登录token头部)
      */

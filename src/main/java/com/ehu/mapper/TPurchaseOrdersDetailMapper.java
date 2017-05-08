@@ -1,5 +1,6 @@
 package com.ehu.mapper;
 
+import com.ehu.bean.business.MerchantOrderBean;
 import com.ehu.bean.business.SupplierGoodsBean;
 import com.ehu.bean.request.MerchantOrderDetailRequest;
 import com.ehu.model.TPurchaseOrdersDetail;
@@ -16,4 +17,6 @@ public interface TPurchaseOrdersDetailMapper extends MyMapper<TPurchaseOrdersDet
     List<Map<String, Object>> getOrderDetailGoods(MerchantOrderDetailRequest request);
 
     List<SupplierGoodsBean> getExcelOrders(int orderId);
+
+    List<MerchantOrderBean> getExcelMerchantOrders(MerchantOrderDetailRequest request);
 }

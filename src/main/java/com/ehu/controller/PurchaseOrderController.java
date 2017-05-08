@@ -161,4 +161,48 @@ public class PurchaseOrderController {
                 bos.close();
         }
     }
+
+    @GetMapping("/downloadOrdersExcel")
+    @ApiOperation("下载商家订单")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "startTime", value = "开始时间", dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "endTime", value = "结束时间", dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "merchantId", value = "商家id", dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "personInCharge", value = "负责人", dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "goodsName", value = "商品名称", dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
+    public void getExcelMerchantOrders(@ApiIgnore MerchantOrderDetailRequest request, HttpServletResponse response) throws IOException {
+        ByteArrayOutputStream os = (ByteArrayOutputStream) purchaseOrderService.getExcelMerchantOrders(request);
+        byte[] content = os.toByteArray();
+        InputStream is = new ByteArrayInputStream(content);
+        // 设置response参数，可以打开下载页面
+        response.reset();
+        response.setContentType("application/vnd.ms-excel;charset=utf-8");
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+        String nowString = format.format(new Date());
+        String fileName = "商家端订单-" + nowString;
+        response.setHeader("Content-Disposition", "attachment;filename=" + new String((fileName + ".xls").getBytes(), "iso-8859-1"));
+
+        ServletOutputStream out = response.getOutputStream();
+        BufferedInputStream bis = null;
+        BufferedOutputStream bos = null;
+        try {
+            bis = new BufferedInputStream(is);
+            bos = new BufferedOutputStream(out);
+            byte[] buff = new byte[2048];
+            int bytesRead;
+            // Simple read/write loop.
+            while (-1 != (bytesRead = bis.read(buff, 0, buff.length))) {
+                bos.write(buff, 0, bytesRead);
+            }
+        } catch (final IOException e) {
+            throw e;
+        } finally {
+            if (bis != null)
+                bis.close();
+            if (bos != null)
+                bos.close();
+        }
+    }
 }

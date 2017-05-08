@@ -1,5 +1,6 @@
 package com.ehu.service;
 
+import com.ehu.bean.business.MerchantOrderBean;
 import com.ehu.bean.business.SupplierGoodsBean;
 import com.ehu.bean.request.*;
 import com.ehu.mapper.TMerchantPurchaseOrderMapper;
@@ -111,6 +112,13 @@ public class PurchaseOrderService {
         return purchaseOrder;
     }
 
+    /**
+     * 下载合单后的excel
+     *
+     * @param request
+     * @return
+     * @throws IOException
+     */
     public Object getExcelOrders(MergeOrderRequest request) throws IOException {
         TPurchaseOrder purchaseOrder = (TPurchaseOrder) mergeOrders(request);
         List<SupplierGoodsBean> data = detailMapper.getExcelOrders(purchaseOrder.getPurchaseOrderId());
@@ -118,6 +126,21 @@ public class PurchaseOrderService {
         String[] headers = {"供应商", "商品名称", "进货数量", "商品单价"};
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         ex.exportExcel(headers, data, out);
+        return out;
+    }
+
+    /**
+     * 下载商家订单列表
+     *
+     * @param request
+     * @return
+     */
+    public Object getExcelMerchantOrders(MerchantOrderDetailRequest request) {
+        List<MerchantOrderBean> orders = detailMapper.getExcelMerchantOrders(request);
+        ExportExcel<MerchantOrderBean> ex = new ExportExcel<>();
+        String[] headers = {"订单id", "商家名称", "商品名称", "订单数量", "商品单价", "下单时间"};
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        ex.exportExcel(headers, orders, out);
         return out;
     }
 
