@@ -90,4 +90,15 @@ public class SupplierService {
         example.createCriteria().andSupplierNameLike("%" + request.getSupplierName() + "%").andDelFlagEqualTo(BusinessConstants.DEL_FLAG_UNDEL);
         return supplierMainMapper.selectByExampleAndRowBounds(example, new RowBounds(request.getOffset(), request.getPageSize()));
     }
+
+    /**
+     * 设置默认供应商
+     *
+     * @param request
+     * @return
+     */
+    public Object setDefaultSupplier(SupplierRequest request) {
+        supplierMapper.setNonDefault();
+        return supplierMapper.setDefault(request.getSupplierId());
+    }
 }

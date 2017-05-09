@@ -77,4 +77,13 @@ public class SupplierController {
     public Object getMainSuppliers(@ApiIgnore SupplierQueryRequest request) {
         return supplierService.queryMainSuppliers(request);
     }
+
+    @PutMapping("/default")
+    @ApiOperation("设置默认供应商")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "string", paramType = "header")
+    })
+    public Object setDefaultSupplier(@RequestBody @Valid SupplierRequest request) {
+        return supplierService.setDefaultSupplier(request);
+    }
 }

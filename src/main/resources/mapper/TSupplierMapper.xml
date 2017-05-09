@@ -17,4 +17,12 @@
     <result column="del_flag" jdbcType="INTEGER" property="delFlag"/>
     <result column="is_default" jdbcType="INTEGER" property="isDefault"/>
   </resultMap>
+
+  <update id="setNonDefault">
+    UPDATE t_supplier SET is_default = 0
+  </update>
+
+  <update id="setDefault" parameterType="int">
+    UPDATE t_supplier SET is_default = 1 WHERE supplier_id = #{supplierId}
+  </update>
 </mapper>

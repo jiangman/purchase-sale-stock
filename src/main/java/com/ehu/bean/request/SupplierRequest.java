@@ -41,4 +41,7 @@ public class SupplierRequest {
 
     @ApiModelProperty("删除标识(0:正常， 1:已删除)")
     private Integer delFlag = 0;
+
+    @ApiModelProperty("是否默认(0:否，1:是)")
+    private Integer isDefault = 0;
 }

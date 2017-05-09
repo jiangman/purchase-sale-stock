@@ -4,4 +4,7 @@ import com.ehu.model.TSupplier;
 import com.ehu.util.MyMapper;
 
 public interface TSupplierMapper extends MyMapper<TSupplier> {
+    int setNonDefault();
+
+    int setDefault(int supplierId);
 }
