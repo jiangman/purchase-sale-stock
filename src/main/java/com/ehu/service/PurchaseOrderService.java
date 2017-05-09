@@ -66,6 +66,9 @@ public class PurchaseOrderService {
      */
     @Transactional(rollbackFor = Exception.class)
     public Object mergeOrders(MergeOrderRequest request) {
+        if (request.getOrderIds().size() == 0) {
+            return 0;
+        }
         // 1.查询商家提交的采购单详细信息
         TMerchantPurchaseOrdersDetailExample example = new TMerchantPurchaseOrdersDetailExample();
         example.createCriteria().andDelFlagEqualTo(0).andPurchaseOrderIdIn(request.getOrderIds());
