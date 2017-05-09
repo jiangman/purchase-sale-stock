@@ -14,6 +14,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * write something to describe this file.
@@ -97,6 +98,7 @@ public class SupplierService {
      * @param request
      * @return
      */
+    @Transactional(rollbackFor = Exception.class)
     public Object setDefaultSupplier(SupplierRequest request) {
         supplierMapper.setNonDefault();
         return supplierMapper.setDefault(request.getSupplierId());

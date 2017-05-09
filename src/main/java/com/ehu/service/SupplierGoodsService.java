@@ -6,9 +6,11 @@ import com.ehu.bean.request.SupplierGoodsSaveRequest;
 import com.ehu.bean.request.SupplierMenuRequest;
 import com.ehu.bean.response.GoodsMenuResponse;
 import com.ehu.bean.response.PageResponse;
+import com.ehu.constants.BusinessConstants;
 import com.ehu.mapper.TSupplierGoodsMapper;
 import com.ehu.model.GoodsMenu;
 import com.ehu.model.TSupplierGoods;
+import com.ehu.model.TSupplierGoodsExample;
 import com.ehu.util.BeanUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,9 @@ public class SupplierGoodsService {
     public Object saveSupplierGoods(SupplierGoodsSaveRequest request) {
         List<TSupplierGoods> supplierGoodss = new ArrayList<>();
         for (SupplierGoodsSaveDetailRequest detailRequest : request.getGoods()) {
+            if (checkMutiple(detailRequest)) {
+                continue;
+            }
             TSupplierGoods supplierGoods = new TSupplierGoods();
             BeanUtils.copyProperties(detailRequest, supplierGoods);
             supplierGoodss.add(supplierGoods);
@@ -104,5 +109,28 @@ public class SupplierGoodsService {
                 "firstMenuId",
                 "seconds");
         return responses;
+    }
+
+    /**
+     * 商品发布的时候去重
+     *
+     * @param detailRequest
+     * @return
+     */
+    private boolean checkMutiple(SupplierGoodsSaveDetailRequest detailRequest) {
+        TSupplierGoodsExample example = new TSupplierGoodsExample();
+        example.createCriteria().andSgiidEqualTo(detailRequest.getSgiid()).andDelFlagEqualTo(BusinessConstants.DEL_FLAG_UNDEL);
+        List<TSupplierGoods> goodsLists = supplierGoodsMapper.selectByExample(example);
+        for (TSupplierGoods goods : goodsLists) {
+            boolean isSupplierIdEq = detailRequest.getSupplierId() == goods.getSupplierId();
+            boolean isStandardEq = detailRequest.getStandard().equals(goods.getStandard());
+            boolean isStandardValueEq = detailRequest.getStandardValue().compareTo(goods.getStandardValue()) == 0 ? true : false;
+            boolean isMinOrderQuantityEq = detailRequest.getMinOrderQuantity() == goods.getMinOrderQuantity();
+            boolean isCostPriceEq = detailRequest.getCostPrice().compareTo(goods.getCostPrice()) == 0 ? true : false;
+            if (isSupplierIdEq && isStandardEq && isStandardValueEq && isMinOrderQuantityEq && isCostPriceEq) {
+                return true;
+            }
+        }
+        return false;
     }
 }
