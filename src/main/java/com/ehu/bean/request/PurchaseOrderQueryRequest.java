@@ -24,4 +24,6 @@ public class PurchaseOrderQueryRequest extends Page {
     private int payStatus;
 
     private int verifyStatus;
+
+    private int orderStatus = -1;
 }
