@@ -50,6 +50,7 @@ public class PurchaseOrderController {
             @ApiImplicitParam(name = "merchantId", value = "商家id", dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "personInCharge", value = "负责人", dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "goodsName", value = "商品名称", dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "orderStatus", value = "0:待合单订单，3:已合单", dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "pageNo", value = "页码", dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "pageSize", value = "每页条数", dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "string", paramType = "header")
