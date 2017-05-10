@@ -22,7 +22,9 @@
         t1.del_flag delFlag,
         t1.cost_price costPrice,
         t1.min_order_quantity minOrderQuantity,
-        t2.sgi_name sgiName,t2.sgi_icon sgiIcon from t_supplier_goods t1
+        t2.sgi_name sgiName,t2.sgi_icon sgiIcon,
+        t2.bar_code barCode
+        from t_supplier_goods t1
         INNER JOIN ehu.t_store_goods_info t2 on t1.sgiid = t2.sgiid
         <if test="searchText != null">
             AND t2.sgi_name like '%${searchText}%'
